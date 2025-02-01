@@ -2,7 +2,8 @@
 
 int main() {
   double** ptr = NULL;
-  matrix_t mtrx_1 = {ptr, 3, 4};
-  s21_create_matrix(3, 4, &mtrx_1);
+  const int rows = 3, columns = 4;
+  matrix_t mtrx_1 = {ptr, rows, columns};
+  s21_create_matrix(rows, columns, &mtrx_1);
   return 0;
 }
