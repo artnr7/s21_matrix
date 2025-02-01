@@ -42,33 +42,15 @@ int s21_eq_matrix(matrix_t *A, matrix_t *B) {
 }
 
 int s21_sum_sub_mul_nummatrix(matrix_t *A, matrix_t *B, matrix_t *result,
-                              double number) {
+                              double number, int mode) {
   enum error_code er_code = OK;
-  if (A->rows != B->rows || A->columns != B->columns) {
+  if ((mode == 0 || mode == 1) &&
+      (A->rows != B->rows || A->columns != B->columns)) {
     er_code = ARITH;
   }
 
   for (int i = 0; i < A->rows && er_code == OK; i++) {
     for (int j = 0; j < A->columns; j++) {
-		arith_oper();
-    }
-  }
-  return er_code;
-}
-
-int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
-  return s21_sum_sub_mul_nummatrix(A, B, result, 0,);
-}
-
-int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
-  return s21_sum_sub_mul_nummatrix(A, B, result, 0,);
-}
-
-int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
-  matrix_t *B = {0};
-  return s21_sum_sub_mul_nummatrix(A, B, result, number,);
-}
-
       if (mode == 0) {
         result->matrix[i][j] = A->matrix[i][j] + B->matrix[i][j];
       } else if (mode == 1) {
@@ -76,3 +58,29 @@ int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
       } else if (mode == 2) {
         result->matrix[i][j] = A->matrix[i][j] * number;
       }
+    }
+  }
+  return er_code;
+}
+
+int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
+  return s21_sum_sub_mul_nummatrix(A, B, result, 0, 0);
+}
+
+int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
+  return s21_sum_sub_mul_nummatrix(A, B, result, 0, 1);
+}
+
+int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
+  matrix_t *B = {0};
+  return s21_sum_sub_mul_nummatrix(A, B, result, number, 2);
+}
+
+int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
+	  enum error_code er_code = OK;
+	  for(int i = 0; i < A->rows; i++){
+		for(int j = 0; j< A->columns){
+			A[i][j] * B[][]
+		}
+	  }
+}
