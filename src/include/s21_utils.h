@@ -12,4 +12,6 @@ void s21_set_zero_matrix(matrix_t *matrix);
 
 void s21_print_matrix(matrix_t *matrix);
 
+void s21_fill_matrix(matrix_t *temp_A, matrix_t A);
+
 #endif

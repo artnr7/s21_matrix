@@ -95,3 +95,36 @@ int s21_transpose(matrix_t *A, matrix_t *result) {
   }
   return er_code;
 }
+
+// int s21_calc_complements(matrix_t *A, matrix_t *result) {}
+
+int s21_determinant(matrix_t *A, double *result) {
+  enum error_code er_code = OK;
+
+  if (A->rows != A->columns) {
+    er_code = ARITH;
+  }
+
+  if (er_code == OK) {
+    matrix_t temp_A = {NULL, A->rows, A->columns};
+    s21_create_matrix(temp_A.rows, temp_A.columns, &temp_A);
+    s21_fill_matrix(&temp_A, *A);
+
+    for (int i = 0; i < A->rows; i++) {
+      for (int j = i; j < A->rows; j++) {
+        *result *= A->matrix[j][i];
+        for (int k = i; k < A->rows; k++) {
+          temp_A.matrix[j][k] /= A->matrix[j][i];
+        }
+      }
+
+      for (int j = A->rows - 1; j > i; j--) {
+        for (int k = i; k < A->rows; k++) {
+          temp_A.matrix[j][k] -= temp_A.matrix[i][k];
+        }
+      }
+      s21_fill_matrix(A, temp_A);
+    }
+  }
+  return er_code;
+}

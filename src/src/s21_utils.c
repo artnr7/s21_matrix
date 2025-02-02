@@ -45,3 +45,11 @@ void s21_print_matrix(matrix_t *matrix) {
   }
   printf("\n");
 }
+
+void s21_fill_matrix(matrix_t *temp_A, matrix_t A) {
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      temp_A->matrix[i][j] = A.matrix[i][j];
+    }
+  }
+}

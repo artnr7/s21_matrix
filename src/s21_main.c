@@ -3,7 +3,7 @@
 
 int main() {
   /*INIT*/
-  const int rows1 = 3, columns1 = 2;
+  const int rows1 = 3, columns1 = 3;
   const int rows2 = 2, columns2 = 3;
   matrix_t mtrx_1 = {NULL, rows1, columns1};
   matrix_t mtrx_2 = {NULL, rows2, columns2};
@@ -21,19 +21,22 @@ int main() {
       mtrx_1.matrix[i][j] = i * mtrx_1.rows + j + 1;
     }
   }
-  s21_print_matrix(&mtrx_1);
+  // s21_print_matrix(&mtrx_1);
   int cntr = 4;
   for (int i = 0; i < mtrx_2.rows; i++) {
     for (int j = 0; j < mtrx_2.columns; j++) {
       mtrx_2.matrix[i][j] = cntr++;
     }
   }
-  s21_print_matrix(&mtrx_2);
+  // s21_print_matrix(&mtrx_2);
 
+  double det = 0;
   /*PROG*/
 
   // s21_mult_matrix(&mtrx_1, &mtrx_2, &mtrx_3);
-  s21_transpose(&mtrx_1, &mtrx_2);
-  s21_print_matrix(&mtrx_2);
+  // s21_transpose(&mtrx_1, &mtrx_2);
+  s21_determinant(&mtrx_1, &det);
+  // s21_print_matrix(&mtrx_1);
+  printf("%.7f", det);
   return 0;
 }
