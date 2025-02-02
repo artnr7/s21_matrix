@@ -96,7 +96,60 @@ int s21_transpose(matrix_t *A, matrix_t *result) {
   return er_code;
 }
 
-// int s21_calc_complements(matrix_t *A, matrix_t *result) {}
+int s21_calc_complements(matrix_t *A, matrix_t *result) {
+  enum error_code er_code = OK;
+
+  matrix_t minor = {NULL, A->rows - 1, A->columns - 1};
+  s21_create_matrix(minor.rows, minor.columns, &minor);
+  s21_set_zero_matrix(&minor);
+
+  int x = 0;
+  int y = 0;
+
+  // int m_rows = A->rows;
+  // int m_columns = A->columns;
+
+  // 1 1
+  // for (int i = 0; i < m_rows; i++) {
+  //   for (int j = 0; j < m_columns; j++) {
+  //     if (i == 1 && y == 0) {
+  //       y++;
+  //       m_rows--;
+  //     }
+  //     if (j == 1 && x == 0) {
+  //       x++;
+  //       m_columns--;
+  //     }
+  //     minor.matrix[i][j] = A->matrix[i + y][j + x];
+  //   }
+  //   x = 0;
+  // }
+  int mi = 0;
+  int mj = 0;
+  for (int i = 0; i < A->rows; i++) {
+    for (int j = 0; j < A->columns; j++) {
+      if (i == 1 || j == 1) {
+        continue;
+      }
+      minor.matrix[mi][mj] = A->matrix[i][j];
+      mj++;
+    }
+    mi++;
+  }
+
+  s21_print_matrix(&minor);
+
+  // for (int i = 0; i < A->rows; i++) {
+  //   for (int j = 0; j < A->columns; j++) {
+  //     for (int k = 0; k < A->rows; k++) {
+  //       minor.matrix[i][j] =
+  //     }
+  //   }
+  // }
+  s21_set_zero_matrix(result);
+
+  return er_code;
+}
 
 int s21_determinant(matrix_t *A, double *result) {
   enum error_code er_code = OK;
@@ -111,18 +164,8 @@ int s21_determinant(matrix_t *A, double *result) {
     s21_fill_matrix(&temp_A, *A);
 
     for (int i = 0; i < A->rows; i++) {
-      for (int j = i; j < A->rows; j++) {
-        *result *= A->matrix[j][i];
-        for (int k = i; k < A->rows; k++) {
-          temp_A.matrix[j][k] /= A->matrix[j][i];
-        }
-      }
-
-      for (int j = A->rows - 1; j > i; j--) {
-        for (int k = i; k < A->rows; k++) {
-          temp_A.matrix[j][k] -= temp_A.matrix[i][k];
-        }
-      }
+      gauss_del(i, result, &temp_A, *A);
+      gauss_sub(i, &temp_A, *A);
       s21_fill_matrix(A, temp_A);
     }
   }

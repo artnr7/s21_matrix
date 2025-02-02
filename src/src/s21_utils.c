@@ -53,3 +53,20 @@ void s21_fill_matrix(matrix_t *temp_A, matrix_t A) {
     }
   }
 }
+
+void gauss_del(int i, double *result, matrix_t *temp_A, matrix_t A) {
+  for (int j = i; j < A.rows; j++) {
+    *result *= A.matrix[j][i];
+    for (int k = i; k < A.columns; k++) {
+      temp_A->matrix[j][k] /= A.matrix[j][i];
+      // printf("%.7f\n", A.matrix[j][i]);
+    }
+  }
+}
+void gauss_sub(int i, matrix_t *temp_A, matrix_t A) {
+  for (int j = A.rows - 1; j > i; j--) {
+    for (int k = i; k < A.columns; k++) {
+      temp_A->matrix[j][k] -= temp_A->matrix[i][k];
+    }
+  }
+}
