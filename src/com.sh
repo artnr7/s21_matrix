@@ -1,6 +1,6 @@
 #!/bin/bash
 
-data=(date +%d.%m.%Y\ %H:%M)
+data=date+%d.%m.%Y\%H:%M
 echo "$data"
 
 while ! cd .. >/dev/null 2>&1; do
