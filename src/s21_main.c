@@ -21,19 +21,37 @@ int main() {
   //     mtrx_1.matrix[i][j] = i * mtrx_1.rows + j + 1;
   //   }
   // }
-  mtrx_1.matrix[0][0] = 73;
-  mtrx_1.matrix[0][1] = 7;
-  mtrx_1.matrix[0][2] = 6;
+  // mtrx_1.matrix[0][0] = 73;
+  // mtrx_1.matrix[0][1] = 7;
+  // mtrx_1.matrix[0][2] = 6;
 
-  mtrx_1.matrix[1][0] = 110;
-  mtrx_1.matrix[1][1] = 16;
-  mtrx_1.matrix[1][2] = 19;
+  // mtrx_1.matrix[1][0] = 110;
+  // mtrx_1.matrix[1][1] = 16;
+  // mtrx_1.matrix[1][2] = 19;
 
-  mtrx_1.matrix[2][0] = 148;
-  mtrx_1.matrix[2][1] = 10;
-  mtrx_1.matrix[2][2] = 7;
+  // mtrx_1.matrix[2][0] = 148;
+  // mtrx_1.matrix[2][1] = 10;
+  // mtrx_1.matrix[2][2] = 7;
 
-  // s21_print_matrix(&mtrx_1);
+  mtrx_1.matrix[0][0] = 1;
+  mtrx_1.matrix[0][1] = 2;
+  mtrx_1.matrix[0][2] = 3;
+
+  mtrx_1.matrix[1][0] = 0;
+  mtrx_1.matrix[1][1] = 4;
+  mtrx_1.matrix[1][2] = 2;
+
+  mtrx_1.matrix[2][0] = 5;
+  mtrx_1.matrix[2][1] = 2;
+  mtrx_1.matrix[2][2] = 1;
+
+  // mtrx_1.matrix[0][0] = 16;
+  // mtrx_1.matrix[0][1] = 19;
+
+  // mtrx_1.matrix[1][0] = 10;
+  // mtrx_1.matrix[1][1] = 7;
+
+  s21_print_matrix(&mtrx_1);
   int cntr = 4;
   for (int i = 0; i < mtrx_2.rows; i++) {
     for (int j = 0; j < mtrx_2.columns; j++) {
@@ -43,6 +61,7 @@ int main() {
   // s21_print_matrix(&mtrx_2);
   // double det = 1;
   /*PROG*/
+  // s21_determinant(&mtrx_1, &det);
 
   // s21_mult_matrix(&mtrx_1, &mtrx_2, &mtrx_3);
   // s21_transpose(&mtrx_1, &mtrx_2);

@@ -103,50 +103,21 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {
   s21_create_matrix(minor.rows, minor.columns, &minor);
   s21_set_zero_matrix(&minor);
 
-  int x = 0;
-  int y = 0;
+  result->rows = A->rows;
+  result->columns = A->columns;
+  result->matrix = NULL;
 
-  // int m_rows = A->rows;
-  // int m_columns = A->columns;
-
-  // 1 1
-  // for (int i = 0; i < m_rows; i++) {
-  //   for (int j = 0; j < m_columns; j++) {
-  //     if (i == 1 && y == 0) {
-  //       y++;
-  //       m_rows--;
-  //     }
-  //     if (j == 1 && x == 0) {
-  //       x++;
-  //       m_columns--;
-  //     }
-  //     minor.matrix[i][j] = A->matrix[i + y][j + x];
-  //   }
-  //   x = 0;
-  // }
-  int mi = 0;
-  int mj = 0;
-  for (int i = 0; i < A->rows; i++) {
-    for (int j = 0; j < A->columns; j++) {
-      if (i == 1 || j == 1) {
-        continue;
-      }
-      minor.matrix[mi][mj] = A->matrix[i][j];
-      mj++;
-    }
-    mi++;
-  }
-
-  s21_print_matrix(&minor);
-
-  // for (int i = 0; i < A->rows; i++) {
-  //   for (int j = 0; j < A->columns; j++) {
-  //     for (int k = 0; k < A->rows; k++) {
-  //       minor.matrix[i][j] =
-  //     }
-  //   }
-  // }
+  s21_create_matrix(result->rows, result->columns, result);
   s21_set_zero_matrix(result);
+
+  // s21_print_matrix(result);
+
+  for (int i = 0; i < result->rows; i++) {
+    for (int j = 0; j < result->columns; j++) {
+      s21_minor(&minor, *A, &(result->matrix[i][j]), i, j);
+    }
+  }
+  s21_print_matrix(result);
 
   return er_code;
 }
@@ -164,10 +135,20 @@ int s21_determinant(matrix_t *A, double *result) {
     s21_fill_matrix(&temp_A, *A);
 
     for (int i = 0; i < A->rows; i++) {
+      s21_print_matrix(A);
       gauss_del(i, result, &temp_A, *A);
       gauss_sub(i, &temp_A, *A);
       s21_fill_matrix(A, temp_A);
+      if (is_row_or_col_zero(*A)) {
+        printf("ff");
+        *result = 0;
+        break;
+      }
+      
     }
   }
+  s21_print_matrix(A);
+  // printf("%d\n", A->rows);
+
   return er_code;
 }

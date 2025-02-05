@@ -1,8 +1,10 @@
-$date = date +%d.%m.%Y\ %H:%M
+#!/bin/bash
 
+data=(date +%d.%m.%Y\ %H:%M)
+echo "$data"
 
 while ! cd .. >/dev/null 2>&1; do
-    echo "add..."
+    echo "cd..."
     sleep 2
 done
 
@@ -10,8 +12,9 @@ while ! git add . >/dev/null 2>&1; do
     echo "add..."
     sleep 2
 done
+echo "date"
 
-while ! git commit -m "$(date)" >/dev/null 2>&1; do
+while ! git commit -m "$data" >/dev/null 2>&1; do
     echo "commit..."
     sleep 2
 done

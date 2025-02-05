@@ -31,7 +31,7 @@ int s21_sum_sub_mul_nummatrix(matrix_t *A, matrix_t *B, matrix_t *result,
 void s21_set_zero_matrix(matrix_t *matrix) {
   for (int i = 0; i < matrix->rows; i++) {
     for (int j = 0; j < matrix->columns; j++) {
-      matrix->matrix[i][j] = 0;
+      matrix->matrix[i][j] = 1;
     }
   }
 }
@@ -54,6 +54,38 @@ void s21_fill_matrix(matrix_t *temp_A, matrix_t A) {
   }
 }
 
+void s21_minor(matrix_t *minor, matrix_t A, double *minor_det, int ai, int aj) {
+  int mi = 0;
+  int mj = 0;
+  // printf("\nai = %d\naj = %d\n========", ai, aj);
+
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      // printf("\ni = %d\tj = %d\n", i, j);
+
+      if (i == ai || j == aj) {
+        continue;
+      }
+
+      // printf("\nmi = %d\tmj = %d\n", mi, mj);
+
+      minor->matrix[mi][mj] = A.matrix[i][j];
+      mj++;
+    }
+    mj = 0;
+    if (i == ai) {
+      continue;
+    }
+    mi++;
+  }
+  // printf("\nmi = %d\nmj = %d\n", mi, mj);
+  // s21_print_matrix(minor);
+  // printf("f");
+
+  s21_determinant(minor, minor_det);
+  // printf("det = %f\n", *minor_det);
+}
+
 void gauss_del(int i, double *result, matrix_t *temp_A, matrix_t A) {
   for (int j = i; j < A.rows; j++) {
     *result *= A.matrix[j][i];
@@ -70,3 +102,22 @@ void gauss_sub(int i, matrix_t *temp_A, matrix_t A) {
     }
   }
 }
+
+int is_row_or_col_zero(matrix_t A) {
+  double sum1 = 0.0;
+  double sum2 = 0.0;
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      sum1 += A.matrix[i][j];
+      sum2 += A.matrix[j][i];
+    }
+    if (((double)sum1) == 0.0 || ((double)sum2) == 0.0) {
+      return 1;
+    }
+    sum1 = 0.0;
+    sum2 = 0.0;
+  }
+  return 0;
+}
+
+// void per_str() {}
