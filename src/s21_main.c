@@ -72,7 +72,7 @@ int main() {
     }
   }
   // s21_print_matrix(&mtrx_2);
-  // double det = 1;
+  // double det;
   /*PROG*/
   // s21_determinant(&mtrx_1, &det);
 

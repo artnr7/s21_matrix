@@ -18,6 +18,12 @@ void s21_is_null_mtrx_ptr(matrix_t *mtrx, enum error_code *er_code) {
   }
 }
 
+void s21_is_correct_mtrx_size(matrix_t *mtrx, enum error_code *er_code) {
+  if (mtrx->rows < 1 || mtrx->columns < 1) {
+    *er_code = INCORRECT;
+  }
+}
+
 void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,
                            int mode) {
   if (mode == 0 && (A->rows != B->rows ||
@@ -36,7 +42,7 @@ void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,
  * умножения матриц, вызываемая внутри отдельных функция, объединяющая их общую
  * часть
  * @param mode от этой переменной зависит в каком виде будет вызвана эта
- * функция,
+ * функция
  * @param mode 0 ► сложение
  * @param mode 1 ► вычитание
  * @param mode 2 ► умножение на число
@@ -47,6 +53,10 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
   enum error_code er_code = OK;
   s21_is_null_mtrx_ptr(A, &er_code);
   s21_is_null_mtrx_ptr(B, &er_code);
+  if (er_code == OK) {
+    s21_is_correct_mtrx_size(A, &er_code);
+    s21_is_correct_mtrx_size(B, &er_code);
+  }
   if (er_code == INCORRECT) {
     return er_code;
   }
@@ -145,25 +155,29 @@ void s21_minor(matrix_t *minor, matrix_t A, double *minor_det, int ai, int aj) {
   s21_determinant(minor, minor_det);
 }
 
+/**
+ * @brief Приводит матрицу к треугольному виду
+ * @warning Вызывать если уверены в корректности данных
+ */
 void s21_triangulation(matrix_t *A, double *result) {
-  for (int i = 0; i < A->rows - 1; i++) {
+  int brake = 0;
+  for (int i = 0; i < A->rows - 1 && !brake; i++) {
     int imac = i, old_imac = i;
     for (int l = i; l < A->rows; l++) {
       if (A->matrix[l][i] > A->matrix[imac][i]) {
         imac = l;
       }
     }
-
     if (imac != old_imac) {
       *result *= -1;
     }
     s21_col_swap(A, i, imac);
     if (A->matrix[i][i] == 0.0) {
-      printf("fdsfdfds\n\\\\\\\\\\\\\\\\\\\\\\\\\\\nfdsfdss");
-      break;
+      *result = 0;
+      brake = 1;
     }
 
-    for (int j = i + 1; j < A->rows; j++) {
+    for (int j = i + 1; j < A->rows && !brake; j++) {
       double del = A->matrix[j][i] / A->matrix[i][i];
       for (int k = i; k < A->columns; k++) {
         A->matrix[j][k] -= A->matrix[i][k] * del;
@@ -172,28 +186,6 @@ void s21_triangulation(matrix_t *A, double *result) {
   }
 }
 
-/**
- * @brief Проверяет, что число value_1 равно value_2
- * Проверка входных данных на корректность не осуществляется и должна
- * производится за пределами функции
- *
- * Перед выполнением сравнения у чисел отбрасываются конечные нули (функцией
- * s21_remove_trailing_zeros()):
- *
- * 123.510 -> 123.51
- * 0.00000 -> 0
- * 500.001 -> 500.001
- * 500.10 -> 500.1
-
-
- * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @param value_1 первое сравниваемое число
- * @param value_2 второе сравниваемое число
- * @return int результат сравнения:
- *          1 - true
- *          0 - false
- *
- */
 void s21_col_swap(matrix_t *A, int i, int imac) {
   double tmp_num = 0;
   for (int j = 0; j < A->columns; j++) {
