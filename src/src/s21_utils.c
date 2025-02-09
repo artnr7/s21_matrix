@@ -12,18 +12,31 @@ void s21_print_matrix(
 }
 
 // проверочки мои проверки
+/**
+ * @brief Определяет выделилась память для матрицы
+ * @warning Вызывать если уверены в корректности данных
+ */
 void s21_is_null_mtrx_ptr(matrix_t *mtrx, enum error_code *er_code) {
   if (mtrx->matrix == NULL) {
     *er_code = INCORRECT;
   }
 }
 
+/**
+ * @brief Определяет являются ли размеры матрицы корректными((rows or cols) > 0)
+ * @warning Вызывать если уверены в корректности данных
+ */
 void s21_is_correct_mtrx_size(matrix_t *mtrx, enum error_code *er_code) {
   if (mtrx->rows < 1 || mtrx->columns < 1) {
     *er_code = INCORRECT;
   }
 }
 
+/**
+ * @brief Проверяет что матрицы одиннакового размера или для функции умножения,
+ * что матрицы возможно умножить
+ * @warning Вызывать если уверены в корректности данных
+ */
 void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,
                            int mode) {
   if (mode == 0 && (A->rows != B->rows ||
@@ -57,13 +70,11 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
     s21_is_correct_mtrx_size(A, &er_code);
     s21_is_correct_mtrx_size(B, &er_code);
   }
-  if (er_code == INCORRECT) {
+  if (er_code != OK) {
     return er_code;
   }
-
   result->matrix = NULL;
   result->rows = A->rows;
-
   if (mode == 0 || mode == 1 || mode == 2) {
     s21_are_eq_mtrx_sizes(A, B, &er_code, 0);
     result->columns = A->columns;
@@ -71,10 +82,8 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
     s21_are_eq_mtrx_sizes(A, B, &er_code, 1);
     result->columns = B->columns;
   }
-
   if (er_code == OK) {
-    s21_create_matrix(result->rows, result->columns, result);
-    s21_is_null_mtrx_ptr(result, &er_code);
+    er_code = s21_create_matrix(result->rows, result->columns, result);
   }
   for (int i = 0; i < result->rows && er_code == OK; i++) {
     for (int j = 0; j < result->columns; j++) {
@@ -133,6 +142,10 @@ void s21_copy_matrix(matrix_t *temp_A, matrix_t A) {
   }
 }
 
+/**
+ * @brief Вычисляет минор для заданного элемента в матрице
+ * @warning Вызывать если уверены в корректности данных
+ */
 void s21_minor(matrix_t *minor, matrix_t A, double *minor_det, int ai, int aj) {
   int mi = 0;
   int mj = 0;
@@ -186,6 +199,10 @@ void s21_triangulation(matrix_t *A, double *result) {
   }
 }
 
+/**
+ * @brief Меняет местами заданные строки местами
+ * @warning Вызывать если уверены в корректности данных
+ */
 void s21_col_swap(matrix_t *A, int i, int imac) {
   double tmp_num = 0;
   for (int j = 0; j < A->columns; j++) {

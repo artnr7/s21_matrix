@@ -9,19 +9,25 @@
  */
 int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сделано
   enum error_code er_code = OK;
+
+  if (rows < 1 || columns < 1) {
+    er_code = INCORRECT;
+    return er_code;
+  }
   result->matrix = NULL;
   result->matrix = (double **)malloc((rows * columns * sizeof(double)) +
                                      (rows * sizeof(double *)));
+
   s21_is_null_mtrx_ptr(result, &er_code);
-
-  double *ptr = (double *)(result->matrix + rows);
-  if (ptr == NULL) {
-    er_code = INCORRECT;
+  if (er_code == OK) {
+    double *ptr = (double *)(result->matrix + rows);
+    if (ptr == NULL) {
+      er_code = INCORRECT;
+    }
+    for (int i = 0; i < rows && er_code == OK; i++) {
+      result->matrix[i] = ptr + columns * i;
+    }
   }
-  for (int i = 0; i < rows && er_code == OK; i++) {
-    result->matrix[i] = ptr + columns * i;
-  }
-
   return er_code;
 }
 
@@ -86,11 +92,7 @@ int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
   B->columns = A->columns;
   B->matrix = NULL;
 
-  s21_is_correct_mtrx_size(B, &er_code);
-  if (er_code == OK) {
-    s21_create_matrix(B->rows, B->columns, B);
-  }
-  s21_is_null_mtrx_ptr(B, &er_code);
+  er_code = s21_create_matrix(B->rows, B->columns, B);
 
   if (er_code == OK) {
     s21_sum_sub_mulnum_mulmtrx(A, B, result, number, 2);
@@ -115,7 +117,7 @@ int s21_transpose(matrix_t *A, matrix_t *result) {  // сделано
   if (er_code == OK) {
     s21_is_correct_mtrx_size(A, &er_code);
   }
-  if (er_code == INCORRECT) {
+  if (er_code != OK) {
     return er_code;
   }
 
@@ -123,8 +125,7 @@ int s21_transpose(matrix_t *A, matrix_t *result) {  // сделано
   result->columns = A->rows;
   result->matrix = NULL;
 
-  s21_create_matrix(result->rows, result->columns, result);
-  s21_is_null_mtrx_ptr(result, &er_code);
+  er_code = s21_create_matrix(result->rows, result->columns, result);
 
   for (int i = 0; i < A->rows && er_code == OK; i++) {
     for (int j = 0; j < A->columns; j++) {
@@ -144,7 +145,11 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
   if (er_code == OK) {
     s21_is_correct_mtrx_size(A, &er_code);
   }
-  if (er_code == INCORRECT) {
+  if (er_code == OK &&
+      A->rows != A->columns) {  // проверка на квадратность матрицы
+    er_code = ARITH;
+  }
+  if (er_code != OK) {
     return er_code;
   }
 
@@ -156,25 +161,25 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
     minor.rows = A->rows;
     minor.columns = A->columns;
   }
-  s21_create_matrix(minor.rows, minor.columns, &minor);
+
+  // надо сделать случай когда матрица 1 на 1
+  er_code = s21_create_matrix(minor.rows, minor.columns, &minor);
 
   result->rows = A->rows;
   result->columns = A->columns;
   result->matrix = NULL;
-  s21_create_matrix(result->rows, result->columns, result);
 
-  s21_is_null_mtrx_ptr(&minor, &er_code);
-  s21_is_null_mtrx_ptr(result, &er_code);
+  er_code = s21_create_matrix(result->rows, result->columns, result);
 
   if (er_code == OK) {
-    s21_set_matrix(&minor, 0);
     s21_set_matrix(result, 1);
-
-    for (int i = 0; i < result->rows; i++) {
-      for (int j = 0; j < result->columns; j++) {
-        s21_minor(&minor, *A, &(result->matrix[i][j]), i, j);
-      }
+  }
+  for (int i = 0; i < result->rows && er_code == OK; i++) {
+    for (int j = 0; j < result->columns; j++) {
+      s21_minor(&minor, *A, &(result->matrix[i][j]), i, j);
     }
+  }
+  if (er_code == OK) {
     s21_remove_matrix(&minor);
   }
   return er_code;
@@ -213,18 +218,24 @@ int s21_determinant(matrix_t *A, double *result) {  // сделано
 int s21_inverse_matrix(matrix_t *A, matrix_t *result) {  // сделано
   enum error_code er_code = OK;
   s21_is_null_mtrx_ptr(A, &er_code);
+  if (er_code == OK) {
+    s21_is_correct_mtrx_size(A, &er_code);
+  }
+
+  matrix_t tmp_mtrx = {NULL, A->rows, A->columns};
+  er_code = s21_create_matrix(tmp_mtrx.rows, tmp_mtrx.columns, &tmp_mtrx);
+  if (er_code != OK) {
+    return er_code;
+  }
 
   /*
    создание и удаление матрицы tmp_mtrx, так как матрица в ходе нахождения
    определителя меняется, нам приходится заводить временную чтобы основная не
    поменялась
   */
-  matrix_t tmp_mtrx = {NULL, A->rows, A->columns};
-  s21_create_matrix(tmp_mtrx.rows, tmp_mtrx.columns, &tmp_mtrx);
-  s21_is_null_mtrx_ptr(&tmp_mtrx, &er_code);
-  if (er_code == INCORRECT) {
-    return er_code;
-  }
+
+  // переделать так чтобы тмп был заместо кофактора
+
   double det = 1;
   s21_copy_matrix(&tmp_mtrx, *A);
   s21_determinant(&tmp_mtrx, &det);
@@ -233,13 +244,12 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result) {  // сделано
   }
 
   if (er_code == OK) {
-    double inv_det = 1 / det;
-    matrix_t cofactor;
-    er_code = s21_calc_complements(A, &cofactor);
+    er_code = s21_calc_complements(A, &tmp_mtrx);
     if (er_code == OK) {
-      er_code = s21_transpose(&cofactor, result);
-      s21_remove_matrix(&cofactor);
+      er_code = s21_transpose(&tmp_mtrx, result);
+      s21_remove_matrix(&tmp_mtrx);
     }
+    double inv_det = 1 / det;
     for (int i = 0; i < result->rows && er_code == OK; i++) {
       for (int j = 0; j < result->columns; j++) {
         result->matrix[i][j] *= (1 / inv_det);
