@@ -33,17 +33,17 @@ int main() {
   // mtrx_1.matrix[2][1] = 10;
   // mtrx_1.matrix[2][2] = 7;
 
-  mtrx_1.matrix[0][0] = 1;
-  mtrx_1.matrix[0][1] = 2;
-  mtrx_1.matrix[0][2] = 3;
+  // mtrx_1.matrix[0][0] = 1;
+  // mtrx_1.matrix[0][1] = 2;
+  // mtrx_1.matrix[0][2] = 3;
 
-  mtrx_1.matrix[1][0] = 0;
-  mtrx_1.matrix[1][1] = 4;
-  mtrx_1.matrix[1][2] = 2;
+  // mtrx_1.matrix[1][0] = 0;
+  // mtrx_1.matrix[1][1] = 4;
+  // mtrx_1.matrix[1][2] = 2;
 
-  mtrx_1.matrix[2][0] = 5;
-  mtrx_1.matrix[2][1] = 2;
-  mtrx_1.matrix[2][2] = 1;
+  // mtrx_1.matrix[2][0] = 5;
+  // mtrx_1.matrix[2][1] = 2;
+  // mtrx_1.matrix[2][2] = 1;
 
   // mtrx_1.matrix[0][0] = 16;
   // mtrx_1.matrix[0][1] = 19;
@@ -51,7 +51,20 @@ int main() {
   // mtrx_1.matrix[1][0] = 10;
   // mtrx_1.matrix[1][1] = 7;
 
+  mtrx_1.matrix[0][0] = 2;
+  mtrx_1.matrix[0][1] = 5;
+  mtrx_1.matrix[0][2] = 7;
+
+  mtrx_1.matrix[1][0] = 6;
+  mtrx_1.matrix[1][1] = 3;
+  mtrx_1.matrix[1][2] = 4;
+
+  mtrx_1.matrix[2][0] = 5;
+  mtrx_1.matrix[2][1] = -2;
+  mtrx_1.matrix[2][2] = -3;
+
   s21_print_matrix(&mtrx_1);
+  printf("------------------\n");
   int cntr = 4;
   for (int i = 0; i < mtrx_2.rows; i++) {
     for (int j = 0; j < mtrx_2.columns; j++) {
@@ -64,10 +77,17 @@ int main() {
   // s21_determinant(&mtrx_1, &det);
 
   // s21_mult_matrix(&mtrx_1, &mtrx_2, &mtrx_3);
+
   // s21_transpose(&mtrx_1, &mtrx_2);
+
   // s21_determinant(&mtrx_1, &det);
-  s21_calc_complements(&mtrx_1, &mtrx_3);
+  // printf("det ===== %.7f", det);
+
+  // s21_calc_complements(&mtrx_1, &mtrx_3);
+  // printf("------------------\n");
   // s21_print_matrix(&mtrx_3);
-  // printf("det =====%.7f", det);
+
+  s21_inverse_matrix(&mtrx_1, &mtrx_3);
+  s21_print_matrix(&mtrx_3);
   return 0;
 }

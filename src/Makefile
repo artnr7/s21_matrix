@@ -9,7 +9,7 @@ OBJS = $(CFILES:.c=.o)
 LIB_FILE = s21_matrix.a
 
 FILES_REPORT = *.gcno *.gcda gcov_test coverage.info gcov_test_lcov report_gcov report_lcov
-RM_FILES = test_add test_mul test_sub test_div test_truncate test_compare test_div test_from_decimal_to_int test_from_int_to_decimal
+RM_FILES = 
 RM_MAIN_FILES =
 
 all: $(LIB_FILE)

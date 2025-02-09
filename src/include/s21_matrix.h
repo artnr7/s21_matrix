@@ -17,7 +17,7 @@ typedef struct matrix_struct {
 
 enum error_code {
   OK,
-  INCORRECT,  // incorrect matrix
+  INCORRECT,  // incorrect matrix ► не выделилась память,
   ARITH       // arithmetic errors,
 };
 
@@ -40,4 +40,7 @@ int s21_transpose(matrix_t* A, matrix_t* result);
 int s21_calc_complements(matrix_t* A, matrix_t* result);
 
 int s21_determinant(matrix_t* A, double* result);
+
+int s21_inverse_matrix(matrix_t* A, matrix_t* result);
+
 #endif
