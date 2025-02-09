@@ -2,8 +2,6 @@
 
 data=$(date "+%d.%m.%Y %H:%M")
 
-echo "$data" 
-
 while ! cd .. >/dev/null 2>&1; do
     echo "cd..."
     sleep 2
