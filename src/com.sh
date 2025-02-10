@@ -13,7 +13,7 @@ while ! git add . >/dev/null 2>&1; do
 done
 
 
-while ! git commit -m "$data" ; do
+while ! git commit -m "$data" >/dev/null 2>&1; do
     echo "commit..."
     sleep 2
 done
