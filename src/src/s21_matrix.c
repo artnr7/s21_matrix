@@ -234,8 +234,6 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result) {  // сделано
    поменялась
   */
 
-  // переделать так чтобы тмп был заместо кофактора
-
   double det = 1;
   s21_copy_matrix(&tmp_mtrx, *A);
   s21_determinant(&tmp_mtrx, &det);
@@ -252,7 +250,7 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result) {  // сделано
     double inv_det = 1 / det;
     for (int i = 0; i < result->rows && er_code == OK; i++) {
       for (int j = 0; j < result->columns; j++) {
-        result->matrix[i][j] *= (1 / inv_det);
+        result->matrix[i][j] *= inv_det;
       }
     }
   }
