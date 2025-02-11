@@ -23,6 +23,7 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
     double *ptr = (double *)(result->matrix + rows);
     if (ptr == NULL) {
       er_code = INCORRECT;
+      s21_remove_matrix(result);
     }
     for (int i = 0; i < rows && er_code == OK; i++) {
       result->matrix[i] = ptr + columns * i;
@@ -60,7 +61,7 @@ int s21_eq_matrix(matrix_t *A, matrix_t *B) {  // сделано
 
   for (int i = 0; i < A->rows && eq_code == SUCCESS; i++) {
     for (int j = 0; j < A->columns && eq_code == SUCCESS; j++) {
-      if (fabs(A->matrix[i][j] - B->matrix[i][j]) > EPS) {
+      if (fabs(A->matrix[i][j] - B->matrix[i][j]) > S21_EPS) {
         eq_code = FAILURE;
       }
     }
