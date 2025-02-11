@@ -1,6 +1,6 @@
 #include <check.h>
 
-#include "s21_matrix.h"
+#include "../include/s21_matrix.h"
 
 START_TEST(create) {
   matrix_t m = {0};
