@@ -18,7 +18,7 @@ while ! git commit -m "$data" >/dev/null 2>&1; do
     sleep 2
 done
 
-while ! git push origin develop >/dev/null 2>&1; do
+while ! git push origin  develop >/dev/null 2>&1; do
     echo "push..."
     sleep 2
 done
