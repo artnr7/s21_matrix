@@ -1,7 +1,7 @@
 GCC = gcc -Wall -Werror -Wextra -std=c11
 GCOV_FLAGS = --coverage
 CHECK_FLAGS = -lcheck -lm -lsubunit
-CFILES = src/*
+CFILES = $(wildcard src/*.c)
 
 OBJS = $(CFILES:.c=.o)
 
@@ -9,8 +9,8 @@ TEST_FILE = test/tests.c
 LIB_FILE = s21_matrix.a
 
 FILES_REPORT = *.gcno *.gcda gcov_test coverage.info gcov_test_lcov report_gcov report_lcov
-# RM_FILES = test_f s21_create_matrix_test s21_matrix.a
-# RM_MAIN_FILES = s21_matrix
+RM_FILES = test_f s21_create_matrix_test s21_matrix.a $(wildcard src/*.o)
+RM_MAIN_FILES = s21_matrix
 
 all: $(LIB_FILE)
 
@@ -18,7 +18,7 @@ run: $(LIB_FILE)
 	$(GCC)  s21_main.c -L. $(LIB_FILE) -o s21_matrix
 	./s21_matrix	
 
-# reb: clean clang all run clean
+
 reb: clean clang all run clean
 
 test: clean $(LIB_FILE)
@@ -26,7 +26,7 @@ test: clean $(LIB_FILE)
 	./test_f
 
 test_create: clean $(LIB_FILE)
-	$(GCC)  test/s21_create_matrix_test.c -L. $(LIB_FILE) $(CHECK_FLAGS) -o s21_create_matrix_test
+	$(GCC) test/s21_create_matrix_test.c -L. $(LIB_FILE) $(CHECK_FLAGS) -o s21_create_matrix_test
 	./s21_create_matrix_test
 
 
@@ -36,8 +36,6 @@ $(LIB_FILE): $(OBJS)
 
 %.o: %.c
 	$(GCC) -c $< -o $@
-rr:
-	$(GCC) src/s21_matrix.c -o s21_matrix
 
 clean: 
 	rm -rf *.o *.a report $(FILES_REPORT)  $(RM_FILES) $(RM_MAIN_FILES) 

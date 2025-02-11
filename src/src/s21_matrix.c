@@ -9,11 +9,11 @@
  */
 int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сделано
   enum error_code er_code = OK;
-
   if (rows < 1 || columns < 1) {
     er_code = INCORRECT;
     return er_code;
   }
+
   result->matrix = NULL;
   result->matrix = (double **)malloc((rows * columns * sizeof(double)) +
                                      (rows * sizeof(double *)));
