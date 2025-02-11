@@ -3,352 +3,302 @@
 #include "../include/s21_utils.h"
                     
 START_TEST(create_1) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = -5;
-  mtrx->columns = -5;
+  const int rows = -5, cols = -5;
+  matrix_t mtrx = {NULL, rows, cols};
   if (-5 < 1 || -5 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (-5 >= 1 && -5 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_2) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = -5;
-  mtrx->columns = 0;
+  const int rows = -5, cols = 0;
+  matrix_t mtrx = {NULL, rows, cols};
   if (-5 < 1 || 0 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (-5 >= 1 && 0 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_3) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = -5;
-  mtrx->columns = 1;
+  const int rows = -5, cols = 1;
+  matrix_t mtrx = {NULL, rows, cols};
   if (-5 < 1 || 1 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (-5 >= 1 && 1 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_4) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = -5;
-  mtrx->columns = 4;
+  const int rows = -5, cols = 4;
+  matrix_t mtrx = {NULL, rows, cols};
   if (-5 < 1 || 4 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (-5 >= 1 && 4 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_5) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = -5;
-  mtrx->columns = 100;
+  const int rows = -5, cols = 100;
+  matrix_t mtrx = {NULL, rows, cols};
   if (-5 < 1 || 100 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (-5 >= 1 && 100 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_6) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 0;
-  mtrx->columns = -5;
+  const int rows = 0, cols = -5;
+  matrix_t mtrx = {NULL, rows, cols};
   if (0 < 1 || -5 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (0 >= 1 && -5 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_7) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 0;
-  mtrx->columns = 0;
+  const int rows = 0, cols = 0;
+  matrix_t mtrx = {NULL, rows, cols};
   if (0 < 1 || 0 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (0 >= 1 && 0 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_8) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 0;
-  mtrx->columns = 1;
+  const int rows = 0, cols = 1;
+  matrix_t mtrx = {NULL, rows, cols};
   if (0 < 1 || 1 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (0 >= 1 && 1 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_9) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 0;
-  mtrx->columns = 4;
+  const int rows = 0, cols = 4;
+  matrix_t mtrx = {NULL, rows, cols};
   if (0 < 1 || 4 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (0 >= 1 && 4 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_10) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 0;
-  mtrx->columns = 100;
+  const int rows = 0, cols = 100;
+  matrix_t mtrx = {NULL, rows, cols};
   if (0 < 1 || 100 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (0 >= 1 && 100 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_11) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 1;
-  mtrx->columns = -5;
+  const int rows = 1, cols = -5;
+  matrix_t mtrx = {NULL, rows, cols};
   if (1 < 1 || -5 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (1 >= 1 && -5 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_12) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 1;
-  mtrx->columns = 0;
+  const int rows = 1, cols = 0;
+  matrix_t mtrx = {NULL, rows, cols};
   if (1 < 1 || 0 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (1 >= 1 && 0 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_13) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 1;
-  mtrx->columns = 1;
+  const int rows = 1, cols = 1;
+  matrix_t mtrx = {NULL, rows, cols};
   if (1 < 1 || 1 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (1 >= 1 && 1 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_14) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 1;
-  mtrx->columns = 4;
+  const int rows = 1, cols = 4;
+  matrix_t mtrx = {NULL, rows, cols};
   if (1 < 1 || 4 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (1 >= 1 && 4 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_15) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 1;
-  mtrx->columns = 100;
+  const int rows = 1, cols = 100;
+  matrix_t mtrx = {NULL, rows, cols};
   if (1 < 1 || 100 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (1 >= 1 && 100 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_16) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 4;
-  mtrx->columns = -5;
+  const int rows = 4, cols = -5;
+  matrix_t mtrx = {NULL, rows, cols};
   if (4 < 1 || -5 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (4 >= 1 && -5 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_17) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 4;
-  mtrx->columns = 0;
+  const int rows = 4, cols = 0;
+  matrix_t mtrx = {NULL, rows, cols};
   if (4 < 1 || 0 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (4 >= 1 && 0 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_18) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 4;
-  mtrx->columns = 1;
+  const int rows = 4, cols = 1;
+  matrix_t mtrx = {NULL, rows, cols};
   if (4 < 1 || 1 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (4 >= 1 && 1 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_19) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 4;
-  mtrx->columns = 4;
+  const int rows = 4, cols = 4;
+  matrix_t mtrx = {NULL, rows, cols};
   if (4 < 1 || 4 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (4 >= 1 && 4 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_20) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 4;
-  mtrx->columns = 100;
+  const int rows = 4, cols = 100;
+  matrix_t mtrx = {NULL, rows, cols};
   if (4 < 1 || 100 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (4 >= 1 && 100 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_21) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 100;
-  mtrx->columns = -5;
+  const int rows = 100, cols = -5;
+  matrix_t mtrx = {NULL, rows, cols};
   if (100 < 1 || -5 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (100 >= 1 && -5 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_22) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 100;
-  mtrx->columns = 0;
+  const int rows = 100, cols = 0;
+  matrix_t mtrx = {NULL, rows, cols};
   if (100 < 1 || 0 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (100 >= 1 && 0 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_23) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 100;
-  mtrx->columns = 1;
+  const int rows = 100, cols = 1;
+  matrix_t mtrx = {NULL, rows, cols};
   if (100 < 1 || 1 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (100 >= 1 && 1 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_24) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 100;
-  mtrx->columns = 4;
+  const int rows = 100, cols = 4;
+  matrix_t mtrx = {NULL, rows, cols};
   if (100 < 1 || 4 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (100 >= 1 && 4 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST
         START_TEST(create_25) {
-  matrix_t *mtrx = {0};
-
-  mtrx->rows = 100;
-  mtrx->columns = 100;
+  const int rows = 100, cols = 100;
+  matrix_t mtrx = {NULL, rows, cols};
   if (100 < 1 || 100 < 1) {
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     } else if (100 >= 1 && 100 >= 1) {
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }
 }
 END_TEST

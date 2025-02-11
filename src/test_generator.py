@@ -51,16 +51,14 @@ def s21_create_matrix_test_fun(test_coll):
         for j in test_coll[0][1]:
             s21_create_matrix_test_file.write(
 f"""START_TEST(create_{cntr}) {{
-  matrix_t *mtrx = {{0}};
-  mtrx->matrix = NULL;
-  mtrx->rows = {i};
-  mtrx->columns = {j};
+  const int rows = {i}, cols = {j};
+  matrix_t mtrx = {{NULL, rows, cols}};
   if ({i} < 1 || {j} < 1) {{
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
+        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
     }} else if ({i} >= 1 && {j} >= 1) {{
-    ck_assert_int_eq(0, s21_create_matrix(mtrx->rows, mtrx->columns, mtrx));
-    s21_remove_matrix(mtrx);
+    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+    s21_remove_matrix(&mtrx);
     }}
 }}
 END_TEST
