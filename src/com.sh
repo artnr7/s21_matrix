@@ -23,5 +23,10 @@ while ! git push origin develop >/dev/null 2>&1; do
     sleep 2
 done
 
+while ! git push gihub develop >/dev/null 2>&1; do
+    echo "push..."
+    sleep 2
+done
+
 echo "Done."
 
