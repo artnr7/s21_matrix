@@ -27,7 +27,7 @@ def test_main(file_name):
 
 
 def test_suite(file_name, cntr):
-    file_name.write("""Suite *s21_create_matrix_test(void) {
+    file_name.write("""Suite  *s21_create_matrix_test(void) {
   Suite *s;
 
   TCase *tc_create;
