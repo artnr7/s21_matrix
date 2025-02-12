@@ -9,7 +9,7 @@ int main() {
   int success = 0;
   SRunner *runner;
 
-  runner = srunner_create(NULL);
+  runner =   srunner_create(NULL);
   srunner_add_suite(runner, s21_create_matrix_test);
   srunner_add_suite(runner, s21_eq_matrix_test);
   srunner_add_suite(runner, s21_sum_matrix_test);
