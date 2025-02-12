@@ -1,63 +1,115 @@
 def std_inlcude(file_name):
     file_name.write(
         """#include <check.h>
-#include "../include/s21_matrix.h"       
+
+#include "../include/s21_matrix.h"
 #include "../include/s21_utils.h"
                     
 """
     )
 
 
+def s21_test_c(suites):
+    s21_test_c_file = open("test/s21_test.c", "w")
+    std_inlcude(s21_test_c_file)
+    s21_test_c_file.write(
+        f"""
+#include "s21_test.h" 
+   
+int main() {{
+  int success = 0;
+  SRunner *runner;
+                    
+  runner = srunner_create(NULL);"""
+    )
+    for i in suites:
+        s21_test_c_file.write(f"srunner_add_suite(runner, {i});\n  ")
+    s21_test_c_file.write(
+         """
+
+    srunner_run_all(runner, CK_NORMAL);
+    success = srunner_ntests_failed(runner);
+    srunner_free(runner);
+    return (success == 0) ? EXIT_SUCCESS : EXIT_FAILURE;}"""
+    )
+    s21_test_c_file.close
+
+
+def s21_test_h(suites):
+    s21_test_h_file = open("test/s21_test.h", "w")
+    std_inlcude(s21_test_h_file)
+    for i in suites:
+        s21_test_h_file.write(f"Suite *{i}(void);\n")
+    s21_test_h_file.close()
+
+
+
+
+# def suite_fun(suites, fun_test_files, test_cntr):
+#     gi = 0
+#     for i in range(len(suites)):
+#         s21_test_file = open(f"test/{fun_test_files[i]}")
+#         fun_test_files[i].write(f"""Suite *{suites[i]}
+#     Suite *s;
+#     TCase *tc_create;
+#     s = suite_create("{suites[i]}_suite");
+#     tc_create = tcase_create({suites[i]}_case");
+# """)
+#     cntr = 1
+#     for i in range(test_cntr):
+
+        
+#     s21_test_file.close()
+
+
+
 # s21_create_matrix
-def test_create_suite_n_main(file_name, cntr):
-    file_name.write(
-        """Suite  *s21_create_matrix_test(void) {
+def suite_fun(suites, index, file_name, test_cntr):
+    file_name.write(f"""Suite *{suites[index]}(void) {{
     Suite *s;
     TCase *tc_create;                
-    s = suite_create("s21_create_matrix_suite");
-    tc_create = tcase_create("s21_create_matrix_case");
+    s = suite_create("{suites[index]}_suite");
+    tc_create = tcase_create({suites[index]}_case");
                         """
     )
-    cntr_1 = 1
-    for i in range(cntr):
-        file_name.write(f"tcase_add_test(tc_create, create_{cntr_1});\n\t")
-        cntr_1 += 1
+
+    cntr = 1
+    for i in range(test_cntr):
+        file_name.write(f"tcase_add_test(tc_create, create_{cntr});\n  ")
+        cntr += 1
     file_name.write(
         """
     suite_add_tcase(s, tc_create);
     return s;
     }                
-    int main() {{
-    int success = 0;
-    Suite *s;
-    SRunner *runner;
-    s = s21_create_matrix_test();
-    runner = srunner_create(s);
-    srunner_run_all(runner, CK_NORMAL);
-    success = srunner_ntests_failed(runner);
-    srunner_free(runner);
-    return (success == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+
     }}
 
     """
     )
 
 
-def s21_create_matrix_test_fun(test_coll):
+def s21_create_matrix_test_fun(test_coll, suites):
+    index = 0
     s21_create_matrix_test_file = open("test/s21_create_matrix_test.c", "w")
     std_inlcude(s21_create_matrix_test_file)
+
     cntr = 1
     for i in test_coll[0][0]:
         for j in test_coll[0][1]:
             s21_create_matrix_test_file.write(
-f"""START_TEST(create_{cntr}) {{
-  const int rows = {i}, cols = {j};
-  matrix_t mtrx = {{NULL, rows, cols}};
+                f"""START_TEST(create_{cntr}) {{
+  int rows = {i}, cols = {j};
+  matrix_t mtrx = {{0}};
   if ({i} < 1 || {j} < 1) {{
     ck_assert_int_eq(1,
-        s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
-    }} else if ({i} >= 1 && {j} >= 1) {{
-    ck_assert_int_eq(0, s21_create_matrix(mtrx.rows, mtrx.columns, &mtrx));
+        s21_create_matrix(rows, cols, &mtrx));
+    ck_assert_int_eq(0, mtrx.rows);
+    ck_assert_int_eq(0, mtrx.columns);
+  }} else if ({i} >= 1 && {j} >= 1) {{
+    ck_assert_int_eq(0, s21_create_matrix(rows, cols, &mtrx));
+    ck_assert_int_eq({i}, mtrx.rows);
+    ck_assert_int_eq({j}, mtrx.columns);
     s21_remove_matrix(&mtrx);
     }}
 }}
@@ -67,9 +119,28 @@ END_TEST
 
             cntr += 1
     cntr -= 1
-    test_create_suite_n_main(s21_create_matrix_test_file, cntr)
+
+    suite_fun(suites, index, s21_create_matrix_test_file, cntr)
     s21_create_matrix_test_file.close()
 
+
+suites = [
+    "s21_create_matrix_test",
+    "s21_eq_matrix_test",
+    "s21_sum_matrix_test",
+    "s21_sub_matrix_test",
+    "s21_sub_matrix_test",
+    "s21_mult_number_test",
+    "s21_mult_matrix_test",
+    "s21_transpose_test",
+    "s21_calc_complements_test",
+    "s21_determinant_test",
+    "s21_inverse_matrix_test",
+]
+
+fun_test_files = []
+for i in suites:
+    fun_test_files.append(i+".c")
 
 # размеры
 rows = [-5, 0, 1, 4, 100]
@@ -81,6 +152,15 @@ test_sizes = [[-5, 0, 1, 4, 100], [-5, 0, 1, 4, 100]]
 test_memory = ["NULL"]
 
 test_coll = [[[-5, 0, 1, 4, 100], [-5, 0, 1, 4, 100]], ["NULL"]]
+
+# test.h
+s21_test_h(suites)
+#test.c
+s21_test_c(suites)
+
+#test_files
+suite_fun(suites)
+
 
 # s21_create_matrix
 s21_create_matrix_test_fun(test_coll)

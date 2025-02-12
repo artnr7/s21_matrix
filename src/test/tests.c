@@ -7,6 +7,7 @@ START_TEST(create) {
   for (int k = 1; k < 50; k++) {
     int rows = k, cols = k;
     ck_assert_int_eq(0, s21_create_matrix(rows, cols, &m));
+    // printf("\n\n\nmrows = %d, rows = %d\n\n\n\n", m.rows, rows);
     ck_assert_int_eq(m.rows, rows);
     ck_assert_int_eq(m.columns, cols);
     for (int i = 0; i < rows; ++i)

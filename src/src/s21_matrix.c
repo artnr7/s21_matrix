@@ -15,6 +15,9 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
   }
 
   result->matrix = NULL;
+  result->rows = rows;
+  result->columns = columns;
+  
   result->matrix = (double **)malloc((rows * columns * sizeof(double)) +
                                      (rows * sizeof(double *)));
 
