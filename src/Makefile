@@ -5,11 +5,12 @@ CFILES = $(wildcard src/*.c)
 
 OBJS = $(CFILES:.c=.o)
 
-TEST_FILE = test/tests.c
+TESTS_FILE = test/tests.c
 LIB_FILE = s21_matrix.a
+TEST_FILES = $(filter-out $(TESTS_FILE),$(wildcard test/*.c))
 
 FILES_REPORT = *.gcno *.gcda gcov_test coverage.info gcov_test_lcov report_gcov report_lcov
-RM_FILES = test_f s21_create_matrix_test s21_matrix.a $(wildcard src/*.o)
+RM_FILES = tests_f test_f s21_create_matrix_test s21_matrix.a $(wildcard src/*.o)
 RM_MAIN_FILES = s21_matrix
 
 all: $(LIB_FILE)
@@ -21,13 +22,13 @@ run: $(LIB_FILE)
 
 reb: clean clang all run clean
 
-test: clean $(LIB_FILE)
-	$(GCC) $(TEST_FILE) -L. $(LIB_FILE) $(CHECK_FLAGS) -o test_f
-	./test_f
+tests: clean $(LIB_FILE)
+	$(GCC) $(TESTS_FILE) -L. $(LIB_FILE) $(CHECK_FLAGS) -o tests_f
+	./tests_f
 
-test_create: clean $(LIB_FILE)
-	$(GCC) test/s21_create_matrix_test.c -L. $(LIB_FILE) $(CHECK_FLAGS) -o s21_create_matrix_test
-	./s21_create_matrix_test
+test: clean $(LIB_FILE)
+	$(GCC) $(TEST_FILES) -L. $(LIB_FILE) $(CHECK_FLAGS) -o test_f
+	./test_f
 
 
 $(LIB_FILE): $(OBJS)
