@@ -64,7 +64,7 @@ def s21_test_h(suites):
 
 
 # s21_create_matrix
-def suite_fun(suites, index, file_name, test_cntr):
+def suite_fun(suites, index,  file_name, test_cntr):
     file_name.write(f"""Suite *{suites[index]}(void) {{
     Suite *s;
     TCase *tc_create;                
