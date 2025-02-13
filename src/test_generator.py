@@ -156,38 +156,42 @@ for i in zeros:
     minus_zeros.append(-i)
 #3
 ones = [1, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001, 0.00000001]
-#4
-ones_1 = []
+
 cntr = 0
-# for i in range(len(ones)):
-#     for j in range(i, len(ones)):
-#         for k in range(j, len(ones)):
-#             for l in range(k, len(ones)):
-#                 for m in range(l, len(ones)):
-#                     for n in range(m, len(ones)):
-#                         for o in range(n, len(ones)):
-#                             for p in range(o, len(ones)):
-#                                 for q in range(p, len(ones)):
-#                                     ones_1.append(ones[i] + ones[j] + ones[k] + ones[l] + ones[m]+ ones[n] + ones[o]+ ones[p] + ones[q])
-#                                     cntr += 1
-#                                     print(cntr, end="\n")
-
-for i in range(1):
-    for i in range()
-
-# for combination in itertools.combinations(ones, len(ones)):
-#     ones_1.append(sum(combination))  # Добавляем сумму комбинации в список
-#     cntr += 1
-#     print(f"Комбинация: {combination}, Сумма: {sum(combination)}, Счетчик: {cntr}")
+ones_1 = []
+tr = 0.00000001
+t = 0
+while t < 0.000001:
+    ones_1.append(t)
+    t += tr
                                     
-
-
-ones_1.sort(reverse=True)
+ones_1.sort()
 #удаление повторяющихся элементов
 ones_1 = [el for el, _ in groupby(ones_1)]
 
+ones_2 = []
+
 for i in ones_1:
-    print(format(i, ".7f"))
+    ones_2.append(1+i)
+
+minus_ones12 = []
+
+for i in ones_1:
+    minus_ones12.append(-i)
+
+for i in ones_2:
+    minus_ones12.append(-i)
+
+
+for i in ones_1:
+    cntr += 1
+    print(format(i, ".8f"))
+for i in ones_2:
+    cntr +=1
+    print(format(i, ".8f"))
+for i in minus_ones12:
+    cntr +=1
+    print(format(i, ".8f"))   
 print(cntr)
 
 
@@ -195,8 +199,6 @@ nums = []
 
 
 # для функции сравнения
-
-
 test_coll = [[[-5, 0, 1, 4, 100], [-5, 0, 1, 4, 100]], ["NULL", "create"]]
 
 # test.h
