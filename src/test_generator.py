@@ -1,6 +1,7 @@
 import itertools
 from itertools import groupby
 
+
 def std_inlcude(file_name):
     file_name.write(
         """#include <check.h>
@@ -14,7 +15,8 @@ def std_inlcude(file_name):
 
 def s21_test_c(suites):
     s21_test_c_file = open("test/s21_test.c", "w")
-    s21_test_c_file.write(f"""
+    s21_test_c_file.write(
+        f"""
 #include "s21_test.h" 
    
 int main() {{
@@ -26,32 +28,36 @@ int main() {{
     for i in suites:
         s21_test_c_file.write(f"\n  srunner_add_suite(runner, {i}());")
     s21_test_c_file.write(
-         """
+        """
   srunner_run_all(runner, CK_NORMAL);
   success = srunner_ntests_failed(runner);
   srunner_free(runner);
   return (success == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
-}""")
+}"""
+    )
     s21_test_c_file.close
 
 
 def s21_test_h(suites):
     s21_test_h_file = open("test/s21_test.h", "w")
     s21_test_h_file.write(
-"""#ifndef TEST_H
+        """#ifndef TEST_H
 #define TEST_H
-""")
+"""
+    )
     std_inlcude(s21_test_h_file)
     for i in suites:
         s21_test_h_file.write(f"Suite *{i}(void);\n\n")
     s21_test_h_file.write(
-"""#endif
-""")
+        """#endif
+"""
+    )
     s21_test_h_file.close()
 
 
 def suite_fun(suites, index, file_name, test_cntr):
-    file_name.write(f"""Suite *{suites[index]}(void) {{
+    file_name.write(
+        f"""Suite *{suites[index]}(void) {{
     Suite *s;
     TCase *tc_create;                
     s = suite_create("{suites[index]}_suite");
@@ -63,9 +69,12 @@ def suite_fun(suites, index, file_name, test_cntr):
     for i in range(test_cntr):
         file_name.write(f"tcase_add_test(tc_create, create_{cntr});\n  ")
         cntr += 1
-    file_name.write("""suite_add_tcase(s, tc_create);
+    file_name.write(
+        """suite_add_tcase(s, tc_create);
     return s;
-}""")
+}"""
+    )
+
 
 # s21_create_matrix
 def s21_create_matrix_test_fun(test_coll, suites):
@@ -77,7 +86,8 @@ def s21_create_matrix_test_fun(test_coll, suites):
     for i in test_coll[0][0]:
         for j in test_coll[0][1]:
             s21_create_matrix_test_file.write(
-                f"""START_TEST(create_{cntr}) {{
+                f"""
+START_TEST(create_{cntr}) {{
   int rows = {i}, cols = {j};
   matrix_t mtrx = {{0}};
   if ({i} < 1 || {j} < 1) {{
@@ -91,7 +101,8 @@ def s21_create_matrix_test_fun(test_coll, suites):
     s21_remove_matrix(&mtrx);
     }}
 }}
-END_TEST\n\n""")
+END_TEST\n\n"""
+            )
 
             cntr += 1
     cntr -= 1
@@ -99,26 +110,52 @@ END_TEST\n\n""")
     suite_fun(suites, index, s21_create_matrix_test_file, cntr)
     s21_create_matrix_test_file.close()
 
-def s21_eq_matrix_test_fun(test_coll, suites):
+
+def s21_eq_matrix_test_fun(test_coll, suites, nums):
     index = 1
-    s21_create_matrix_test_file = open("test/s21_create_matrix_test.c", "w")
-    std_inlcude(s21_create_matrix_test_file)
+    s21_eq_matrix_test_file = open("test/s21_eq_matrix_test.c", "w")
+    std_inlcude(s21_eq_matrix_test_file)
 
     cntr = 1
     for i in test_coll[0][0]:
         for j in test_coll[0][1]:
-            s21_create_matrix_test_file.write(
-                f"""START_TEST(create_{cntr}) {{
+            for k in test_coll[0][0]:
+                for l in test_coll[0][1]:
+                    for m in nums:
+                        s21_eq_matrix_test_file.write(
+                            f"""
+START_TEST(eq_{cntr}) {{
+  int rows1 = {i}, cols1 = {j};
+  matrix_t mtrx1 = {{0}};
+  int rows2 = {k}, cols2 = {l};
+  matrix_t mtrx2 = {{0}};
+if ({i} >= 1 && {j} >= 1 && {k} >= 1 && {l} >= 1) {{
+  s21_create_matrix(rows1, cols1, &mtrx1);
+  s21_create_matrix(rows2, cols2, &mtrx2);
+  for(int i = 0; i < {i}; i++){{
+    for(int j = 0; j < {j}; j++){{
+        mtrx1.matrix[i][j] = {m}
+    }}
+  }}
+  for(int i = 0; i < {k}; i++){{
+    for(int j = 0; j < {l}; j++){{
+        mtrx1.matrix[i][j] = {m}
+    }}
+  }}
+  ck_ass
+  s21_remove_matrix(&mtrx);
 
 }}
-END_TEST\n\n""")
 
-            cntr += 1
+}}
+END_TEST\n\n"""
+                        )
+                        cntr += 1
     cntr -= 1
 
-    suite_fun(suites, index, s21_create_matrix_test_file, cntr)
-    s21_create_matrix_test_file.close()
-    
+    suite_fun(suites, index, s21_eq_matrix_test_file, cntr)
+    s21_eq_matrix_test_file.close()
+
 
 suites = [
     "s21_create_matrix_test",
@@ -136,7 +173,7 @@ suites = [
 
 fun_test_files = []
 for i in suites:
-    fun_test_files.append(i+".c")
+    fun_test_files.append(i + ".c")
 
 # размеры
 rows = [-5, 0, 1, 4, 100]
@@ -148,54 +185,57 @@ test_sizes = [[-5, 0, 1, 4, 100], [-5, 0, 1, 4, 100]]
 test_memory = ["NULL", "create"]
 
 # эелементы матрицы
-#1
+# 1
 zeros = [0, 0.0, 0.00, 0.000, 0.0000, 0.00000, 0.000000, 0.0000000, 0.00000000]
-#2
+# 2
 minus_zeros = []
 for i in zeros:
     minus_zeros.append(-i)
-#3
+# 3
 ones = [1, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001, 0.00000001]
 
-cntr = 0
-ones_1 = []
-tr = 0.00000001
-t = 0
-while t < 0.000001:
-    ones_1.append(t)
-    t += tr
-                                    
+ones_1 = [
+    0,
+    0.00000001,
+    0.00000002,
+    0.00000003,
+    0.00000004,
+    0.00000010,
+    0.00000011,
+    0.00000012,
+    0.00000013,
+    0.00000014,
+    0.00000020,
+    0.00000021,
+    0.00000022,
+    0.00000023,
+    0.00000024,
+    0.00000100,
+    0.00000101,
+    0.00000102,
+    0.00000103,
+    0.000000104,
+    0.00000110,
+    0.00000111,
+    0.00000112,
+    0.00000113,
+    0.00000114,
+]
 ones_1.sort()
-#удаление повторяющихся элементов
+# удаление повторяющихся элементов
 ones_1 = [el for el, _ in groupby(ones_1)]
 
-ones_2 = []
+ones_2 = [i + 1 for i in ones_1]
 
-for i in ones_1:
-    ones_2.append(1+i)
+minus_ones12 = [-i for i in ones_1] + [-i for i in ones_2]
 
-minus_ones12 = []
+(
+    [print(format(i, ".8f")) for i in ones_1]
+    + [print(format(i, ".8f")) for i in ones_2]
+    + [print(format(i, ".8f")) for i in minus_ones12]
+)
 
-for i in ones_1:
-    minus_ones12.append(-i)
-
-for i in ones_2:
-    minus_ones12.append(-i)
-
-
-for i in ones_1:
-    cntr += 1
-    print(format(i, ".8f"))
-for i in ones_2:
-    cntr +=1
-    print(format(i, ".8f"))
-for i in minus_ones12:
-    cntr +=1
-    print(format(i, ".8f"))   
-print(cntr)
-
-
-nums = []
+nums = ones_1 + ones_2 + minus_ones12
 
 
 # для функции сравнения
@@ -203,12 +243,13 @@ test_coll = [[[-5, 0, 1, 4, 100], [-5, 0, 1, 4, 100]], ["NULL", "create"]]
 
 # test.h
 s21_test_h(suites)
-#test.c
+# test.c
 s21_test_c(suites)
 
 # s21_create_matrix
 # s21_create_matrix_test_fun(test_coll, suites)
-
+# s21_eq_matrix
+s21_eq_matrix_test_fun(test_coll, suites, nums)
 
 # Что можно проверить в функциях?
 #  s21_create_matrix ► корректность размеров
