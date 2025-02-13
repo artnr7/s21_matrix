@@ -1,3 +1,6 @@
+import itertools
+from itertools import groupby
+
 def std_inlcude(file_name):
     file_name.write(
         """#include <check.h>
@@ -144,9 +147,55 @@ test_sizes = [[-5, 0, 1, 4, 100], [-5, 0, 1, 4, 100]]
 # выделение памяти
 test_memory = ["NULL", "create"]
 
-# значения матрицы
+# эелементы матрицы
+#1
+zeros = [0, 0.0, 0.00, 0.000, 0.0000, 0.00000, 0.000000, 0.0000000, 0.00000000]
+#2
+minus_zeros = []
+for i in zeros:
+    minus_zeros.append(-i)
+#3
+ones = [1, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001, 0.00000001]
+#4
+ones_1 = []
+cntr = 0
+# for i in range(len(ones)):
+#     for j in range(i, len(ones)):
+#         for k in range(j, len(ones)):
+#             for l in range(k, len(ones)):
+#                 for m in range(l, len(ones)):
+#                     for n in range(m, len(ones)):
+#                         for o in range(n, len(ones)):
+#                             for p in range(o, len(ones)):
+#                                 for q in range(p, len(ones)):
+#                                     ones_1.append(ones[i] + ones[j] + ones[k] + ones[l] + ones[m]+ ones[n] + ones[o]+ ones[p] + ones[q])
+#                                     cntr += 1
+#                                     print(cntr, end="\n")
+
+for i in range(1):
+    for i in range()
+
+# for combination in itertools.combinations(ones, len(ones)):
+#     ones_1.append(sum(combination))  # Добавляем сумму комбинации в список
+#     cntr += 1
+#     print(f"Комбинация: {combination}, Сумма: {sum(combination)}, Счетчик: {cntr}")
+                                    
+
+
+ones_1.sort(reverse=True)
+#удаление повторяющихся элементов
+ones_1 = [el for el, _ in groupby(ones_1)]
+
+for i in ones_1:
+    print(format(i, ".7f"))
+print(cntr)
+
+
+nums = []
+
+
 # для функции сравнения
-eq_nums = [0.0, 0.000000]
+
 
 test_coll = [[[-5, 0, 1, 4, 100], [-5, 0, 1, 4, 100]], ["NULL", "create"]]
 
@@ -156,7 +205,7 @@ s21_test_h(suites)
 s21_test_c(suites)
 
 # s21_create_matrix
-s21_create_matrix_test_fun(test_coll, suites)
+# s21_create_matrix_test_fun(test_coll, suites)
 
 
 # Что можно проверить в функциях?
