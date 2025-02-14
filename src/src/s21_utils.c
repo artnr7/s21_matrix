@@ -4,7 +4,7 @@ void s21_print_matrix(
     matrix_t *matrix) {  // вывод никому не нужен – удали в конце
   for (int i = 0; i < matrix->rows; i++) {
     for (int j = 0; j < matrix->columns; j++) {
-      printf("[%.7f]", matrix->matrix[i][j]);
+      printf("[%.9f]", matrix->matrix[i][j]);
     }
     printf("\n");
   }
@@ -18,6 +18,12 @@ void s21_print_matrix(
  */
 void s21_is_null_mtrx_ptr(matrix_t *mtrx, enum error_code *er_code) {
   if (mtrx->matrix == NULL) {
+    *er_code = INCORRECT;
+  }
+}
+
+void s21_is_null_mtrx(matrix_t *mtrx, enum error_code *er_code) {
+  if (mtrx == NULL) {
     *er_code = INCORRECT;
   }
 }
@@ -64,12 +70,13 @@ void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,
 int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
                                double number, int mode) {
   enum error_code er_code = OK;
-  s21_is_null_mtrx_ptr(A, &er_code);
-  s21_is_null_mtrx_ptr(B, &er_code);
+  s21_is_null_mtrx(A, &er_code);
+  s21_is_null_mtrx(B, &er_code);
   if (er_code == OK) {
-    s21_is_correct_mtrx_size(A, &er_code);
-    s21_is_correct_mtrx_size(B, &er_code);
+    s21_is_null_mtrx_ptr(A, &er_code);
+    s21_is_null_mtrx_ptr(B, &er_code);
   }
+  // printf("er = %d\n", er_code);
   if (er_code != OK) {
     return er_code;
   }
@@ -104,9 +111,6 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
           break;
       }
     }
-  }
-  if (er_code == OK) {
-    s21_remove_matrix(result);
   }
   return er_code;
 }

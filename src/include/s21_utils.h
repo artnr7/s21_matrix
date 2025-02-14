@@ -5,6 +5,8 @@
 
 void s21_is_null_mtrx_ptr(matrix_t *mtrx, enum error_code *er_code);
 
+void s21_is_null_mtrx(matrix_t *mtrx, enum error_code *er_code);
+
 void s21_is_correct_mtrx_size(matrix_t *mtrx, enum error_code *er_code);
 
 void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,

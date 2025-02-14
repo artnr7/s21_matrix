@@ -3,16 +3,16 @@
 
 int main() {
   /*INIT*/
-  const int rows1 = -5, columns1 = -5;
+  // const int rows1 = -5, columns1 = -5;
   // const int rows2 = 2, columns2 = 3;
-  matrix_t mtrx_1 = {NULL, rows1, columns1};
+  // matrix_t mtrx_1 = {NULL, rows1, columns1};
 
-  if (-5 < 1 || -5 < 1) {
-    printf("%d", s21_create_matrix(mtrx_1.rows, mtrx_1.columns, &mtrx_1));
-  } else if (-5 >= 1 && -5 >= 1) {
-    printf("%d", s21_create_matrix(mtrx_1.rows, mtrx_1.columns, &mtrx_1));
-    s21_remove_matrix(&mtrx_1);
-  }
+  // if (-5 < 1 || -5 < 1) {
+  //   printf("%d", s21_create_matrix(mtrx_1.rows, mtrx_1.columns, &mtrx_1));
+  // } else if (-5 >= 1 && -5 >= 1) {
+  //   printf("%d", s21_create_matrix(mtrx_1.rows, mtrx_1.columns, &mtrx_1));
+  //   s21_remove_matrix(&mtrx_1);
+  // }
   // matrix_t mtrx_2 = {NULL, rows2, columns2};
   // matrix_t mtrx_3 = {NULL, rows1, columns2};
 
@@ -97,5 +97,31 @@ int main() {
 
   // s21_inverse_matrix(&mtrx_1, &mtrx_3);
   // s21_print_matrix(&mtrx_3);
+
+  matrix_t a = {0};
+  s21_create_matrix(2, 3, &a);
+  matrix_t b = {0};
+  s21_create_matrix(3, 2, &b);
+  matrix_t result = {0};
+  s21_create_matrix(2, 2, &result);
+  matrix_t true_result = {0};
+  s21_create_matrix(2, 2, &true_result);
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 3; j++) {
+      a.matrix[i][j] = 2.13243;
+      b.matrix[j][i] = 3.34314;
+      if (j != 2) true_result.matrix[i][j] = 21.3870360906;
+    }
+  s21_mult_matrix(&a, &b, &result);
+  s21_eq_matrix(&result, &true_result);
+
+  s21_print_matrix(&result);
+  s21_print_matrix(&true_result);
+
+  s21_remove_matrix(&a);
+  s21_remove_matrix(&b);
+  s21_remove_matrix(&result);
+  s21_remove_matrix(&true_result);
+
   return 0;
 }

@@ -17,7 +17,7 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
   result->matrix = NULL;
   result->rows = rows;
   result->columns = columns;
-  
+
   result->matrix = (double **)malloc((rows * columns * sizeof(double)) +
                                      (rows * sizeof(double *)));
 
@@ -31,7 +31,9 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
     for (int i = 0; i < rows && er_code == OK; i++) {
       result->matrix[i] = ptr + columns * i;
     }
+    s21_set_matrix(result, 0);
   }
+
   return er_code;
 }
 
@@ -39,7 +41,11 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
  * @brief Освобождение памяти выделенные под матрицу
  * @warning Вызывать если память была выделена
  */
-void s21_remove_matrix(matrix_t *A) { free(A->matrix); }  // сделано
+void s21_remove_matrix(matrix_t *A) {
+  if (A->matrix != NULL) {
+    free(A->matrix);
+  }
+}  // сделано
 
 /**
  * @brief Функция сравнения матриц по элементам и размерам
@@ -47,24 +53,27 @@ void s21_remove_matrix(matrix_t *A) { free(A->matrix); }  // сделано
  */
 int s21_eq_matrix(matrix_t *A, matrix_t *B) {  // сделано
   int eq_code = SUCCESS;
-  enum error_code er_code;
+  enum error_code er_code = OK;
 
-  s21_is_null_mtrx_ptr(A, &er_code);
-  s21_is_null_mtrx_ptr(B, &er_code);
+  s21_is_null_mtrx(A, &er_code);
+  s21_is_null_mtrx(B, &er_code);
   if (er_code == OK) {
-    s21_is_correct_mtrx_size(A, &er_code);
-    s21_is_correct_mtrx_size(B, &er_code);
+    s21_is_null_mtrx_ptr(A, &er_code);
+    s21_is_null_mtrx_ptr(B, &er_code);
   }
+
   if (er_code == OK) {
     s21_are_eq_mtrx_sizes(A, B, &er_code, 0);
   }
+
   if (er_code != OK) {
     eq_code = FAILURE;
   }
-
+  // printf("eq = %d\ner = %d\n", eq_code, er_code);
   for (int i = 0; i < A->rows && eq_code == SUCCESS; i++) {
     for (int j = 0; j < A->columns && eq_code == SUCCESS; j++) {
       if (fabs(A->matrix[i][j] - B->matrix[i][j]) > S21_EPS) {
+        // printf("i = %d, j = %d", i, j);
         eq_code = FAILURE;
       }
     }
@@ -90,17 +99,19 @@ int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
  */
 int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
   enum error_code er_code = OK;
-
-  matrix_t *B = {0};
-  B->rows = A->rows;
-  B->columns = A->columns;
-  B->matrix = NULL;
-
-  er_code = s21_create_matrix(B->rows, B->columns, B);
-
+  s21_is_null_mtrx(A, &er_code);
   if (er_code == OK) {
-    s21_sum_sub_mulnum_mulmtrx(A, B, result, number, 2);
+    matrix_t B = {0};
+    B.rows = A->rows;
+    B.columns = A->columns;
+    B.matrix = NULL;
+    er_code = s21_create_matrix(B.rows, B.columns, &B);
+
+    if (er_code == OK) {
+      s21_sum_sub_mulnum_mulmtrx(A, &B, result, number, 2);
+    }
   }
+
   return er_code;
 }
 /**

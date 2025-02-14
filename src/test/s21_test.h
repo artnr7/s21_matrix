@@ -13,8 +13,6 @@ Suite *s21_sum_matrix_test(void);
 
 Suite *s21_sub_matrix_test(void);
 
-Suite *s21_sub_matrix_test(void);
-
 Suite *s21_mult_number_test(void);
 
 Suite *s21_mult_matrix_test(void);
