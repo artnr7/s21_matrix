@@ -5,3 +5,7 @@
 *:Zone.Identifier
 .DS_Store
 */.DS_Store
+test_generator.py
+com.sh
+check.py
+s21_main.c

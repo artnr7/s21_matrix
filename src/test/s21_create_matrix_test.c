@@ -406,8 +406,8 @@ END_TEST
 Suite *s21_create_matrix_test(void) {
   Suite *s;
   TCase *tc_create;
-  s = suite_create("s21_create_matrix_test_suite");
-  tc_create = tcase_create("s21_create_matrix_test_case");
+  s = suite_create("s21_create_matrix_test_suite\n");
+  tc_create = tcase_create("s21_create_matrix_test_case\n");
   tcase_add_test(tc_create, create_1);
   tcase_add_test(tc_create, create_2);
   tcase_add_test(tc_create, create_3);

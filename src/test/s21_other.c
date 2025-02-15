@@ -2,83 +2,19 @@
 
 #include "../include/s21_matrix.h"
 
-START_TEST(create) {
-  matrix_t m = {0};
-  for (int k = 1; k < 50; k++) {
-    int rows = k, cols = k;
-    ck_assert_int_eq(0, s21_create_matrix(rows, cols, &m));
-    // printf("\n\n\nmrows = %d, rows = %d\n\n\n\n", m.rows, rows);
-    ck_assert_int_eq(m.rows, rows);
-    ck_assert_int_eq(m.columns, cols);
-    for (int i = 0; i < rows; ++i)
-      for (int j = 0; j < cols; ++j) {
-        ck_assert_ldouble_eq_tol(0, m.matrix[i][j], S21_EPS);
-      }
-    s21_remove_matrix(&m);
-  }
-}
-END_TEST
-
-START_TEST(create_1) {
-  matrix_t m = {0};
-  for (int k = 0; k > -2; k--) {
-    ck_assert_int_eq(1, s21_create_matrix(k, k, &m));
-    s21_remove_matrix(&m);
-  }
-}
-END_TEST
-
-START_TEST(compare_1) {  // +
-  matrix_t a = {0};
-  s21_create_matrix(2, 2, &a);
-  matrix_t b = {0};
-  s21_create_matrix(2, 2, &b);
-  ck_assert_int_eq(1, s21_eq_matrix(&a, &b));
-  s21_remove_matrix(&a);
-  s21_remove_matrix(&b);
-}
-END_TEST
-
-START_TEST(compare_2) {  // - bc size
-  matrix_t a = {0};
-  s21_create_matrix(2, 3, &a);
-  matrix_t b = {0};
-  s21_create_matrix(2, 2, &b);
-  ck_assert_int_eq(0, s21_eq_matrix(&a, &b));
-  s21_remove_matrix(&a);
-  s21_remove_matrix(&b);
-}
-END_TEST
-
-START_TEST(compare_3) {  // - bc values
-  matrix_t a = {0};
-  s21_create_matrix(2, 3, &a);
-  matrix_t b = {0};
-  s21_create_matrix(2, 3, &b);
-  for (int i = 0; i < 2; i++)
-    for (int j = 0; j < 3; j++) {
-      a.matrix[i][j] = 2;
-      b.matrix[i][j] = 3;
-    }
-  ck_assert_int_eq(0, s21_eq_matrix(&a, &b));
-  s21_remove_matrix(&a);
-  s21_remove_matrix(&b);
-}
-END_TEST
-
 START_TEST(sum_1) {
   matrix_t a = {0};
-  s21_create_matrix(2, 3, &a);
+  s21_create_matrix(4, 3, &a);
   matrix_t b = {0};
-  s21_create_matrix(2, 3, &b);
+  s21_create_matrix(4, 3, &b);
   matrix_t result = {0};
   matrix_t true_result = {0};
-  s21_create_matrix(2, 3, &true_result);
-  for (int i = 0; i < 2; i++)
+  s21_create_matrix(4, 3, &true_result);
+  for (int i = 0; i < 4; i++)
     for (int j = 0; j < 3; j++) {
-      a.matrix[i][j] = 2.13243422;
-      b.matrix[i][j] = 3.3431413598;
-      true_result.matrix[i][j] = 2.13243422 + 3.3431413598;
+      a.matrix[i][j] = 5.43563123;
+      b.matrix[i][j] = 4.4239852324;
+      true_result.matrix[i][j] = 5.43563123 + 4.4239852324;
     }
   ck_assert_int_eq(0, s21_sum_matrix(&a, &b, &result));
   ck_assert_int_eq(1, s21_eq_matrix(&result, &true_result));
@@ -91,9 +27,9 @@ END_TEST
 
 START_TEST(sum_2) {
   matrix_t a = {0};
-  s21_create_matrix(2, 2, &a);
+  s21_create_matrix(4, 2, &a);
   matrix_t b = {0};
-  s21_create_matrix(2, 3, &b);
+  s21_create_matrix(4, 3, &b);
   matrix_t result = {0};
   ck_assert_int_eq(2, s21_sum_matrix(&a, &b, &result));
   s21_remove_matrix(&a);
@@ -104,17 +40,17 @@ END_TEST
 
 START_TEST(sum_3) {
   matrix_t a = {0};
-  s21_create_matrix(2, 3, &a);
+  s21_create_matrix(2, 4, &a);
   matrix_t b = {0};
-  s21_create_matrix(2, 3, &b);
+  s21_create_matrix(2, 4, &b);
   matrix_t result = {0};
   matrix_t true_result = {0};
-  s21_create_matrix(2, 3, &true_result);
+  s21_create_matrix(2, 4, &true_result);
   for (int i = 0; i < 2; i++)
-    for (int j = 0; j < 3; j++) {
-      a.matrix[i][j] = i + j;
+    for (int j = 0; j < 4; j++) {
+      a.matrix[i][j] = 4 * i + j;
       b.matrix[i][j] = j * 2 + i;
-      true_result.matrix[i][j] = i + j + j * 2 + i;
+      true_result.matrix[i][j] = 4 * i + j + j * 2 + i;
     }
   ck_assert_int_eq(0, s21_sum_matrix(&a, &b, &result));
   ck_assert_int_eq(1, s21_eq_matrix(&result, &true_result));
@@ -127,7 +63,7 @@ END_TEST
 
 START_TEST(sum_4) {
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
+  s21_create_matrix(1, 4, &result);
   ck_assert_int_eq(1, s21_sum_matrix(NULL, NULL, &result));
   s21_remove_matrix(&result);
 }
@@ -135,17 +71,17 @@ END_TEST
 
 START_TEST(sub_1) {
   matrix_t a = {0};
-  s21_create_matrix(2, 3, &a);
+  s21_create_matrix(3, 5, &a);
   matrix_t b = {0};
-  s21_create_matrix(2, 3, &b);
+  s21_create_matrix(3, 5, &b);
   matrix_t result = {0};
   matrix_t true_result = {0};
-  s21_create_matrix(2, 3, &true_result);
-  for (int i = 0; i < 2; i++)
-    for (int j = 0; j < 3; j++) {
-      a.matrix[i][j] = 2.13243422;
-      b.matrix[i][j] = 3.3431413598;
-      true_result.matrix[i][j] = 2.13243422 - 3.3431413598;
+  s21_create_matrix(3, 5, &true_result);
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 5; j++) {
+      a.matrix[i][j] = 5.43563123;
+      b.matrix[i][j] = 4.4239852324;
+      true_result.matrix[i][j] = 5.43563123 - 4.4239852324;
     }
   ck_assert_int_eq(0, s21_sub_matrix(&a, &b, &result));
   ck_assert_int_eq(1, s21_eq_matrix(&result, &true_result));
@@ -158,9 +94,9 @@ END_TEST
 
 START_TEST(sub_2) {
   matrix_t a = {0};
-  s21_create_matrix(2, 2, &a);
+  s21_create_matrix(4, 5, &a);
   matrix_t b = {0};
-  s21_create_matrix(2, 3, &b);
+  s21_create_matrix(5, 4, &b);
   matrix_t result = {0};
   ck_assert_int_eq(2, s21_sub_matrix(&a, &b, &result));
   s21_remove_matrix(&a);
@@ -207,10 +143,10 @@ START_TEST(mul_num_1) {
   s21_create_matrix(2, 3, &true_result);
   for (int i = 0; i < 2; i++)
     for (int j = 0; j < 3; j++) {
-      a.matrix[i][j] = 2.13243422;
-      true_result.matrix[i][j] = 2.13243422 * 3.3431413598;
+      a.matrix[i][j] = 5.43563123;
+      true_result.matrix[i][j] = 5.43563123 * 4.4239852324;
     }
-  ck_assert_int_eq(0, s21_mult_number(&a, 3.3431413598, &result));
+  ck_assert_int_eq(0, s21_mult_number(&a, 4.4239852324, &result));
   ck_assert_int_eq(1, s21_eq_matrix(&result, &true_result));
   s21_remove_matrix(&a);
   s21_remove_matrix(&result);
@@ -220,7 +156,7 @@ END_TEST
 
 START_TEST(mul_num_2) {
   matrix_t b = {0};
-  s21_create_matrix(2, 3, &b);
+  s21_create_matrix(1, 13, &b);
   matrix_t result = {0};
   ck_assert_int_eq(1, s21_mult_number(NULL, 2342, &result));
   s21_remove_matrix(&b);
@@ -567,11 +503,9 @@ START_TEST(inv_6) {
 }
 END_TEST
 
-Suite *test_suite(void) {
+Suite *s21_other(void) {
   Suite *s;
 
-  TCase *tc_create;
-  TCase *tc_compare;
   TCase *tc_sum;
   TCase *tc_sub;
   TCase *tc_mul_num;
@@ -581,66 +515,55 @@ Suite *test_suite(void) {
   TCase *tc_det;
   TCase *tc_inv;
 
-  s = suite_create("Matrix tests");
+  s = suite_create("s21_other");
 
-  tc_create = tcase_create("creating matrices\n");
-  tcase_add_test(tc_create, create);
-  tcase_add_test(tc_create, create_1);
-  suite_add_tcase(s, tc_create);
-
-  tc_compare = tcase_create("is equal\n");
-  tcase_add_test(tc_compare, compare_1);
-  tcase_add_test(tc_compare, compare_2);
-  tcase_add_test(tc_compare, compare_3);
-  suite_add_tcase(s, tc_compare);
-
-  tc_sum = tcase_create("sum\n");
+  tc_sum = tcase_create("s21_sum\n");
   tcase_add_test(tc_sum, sum_1);
   tcase_add_test(tc_sum, sum_2);
   tcase_add_test(tc_sum, sum_3);
   tcase_add_test(tc_sum, sum_4);
   suite_add_tcase(s, tc_sum);
 
-  tc_sub = tcase_create("sub\n");
+  tc_sub = tcase_create("s21_sub\n");
   tcase_add_test(tc_sub, sub_1);
   tcase_add_test(tc_sub, sub_2);
   tcase_add_test(tc_sub, sub_3);
   tcase_add_test(tc_sub, sub_4);
   suite_add_tcase(s, tc_sub);
 
-  tc_mul_num = tcase_create("mult by num\n");
+  tc_mul_num = tcase_create("s21_mul_num\n");
   tcase_add_test(tc_mul_num, mul_num_1);
   tcase_add_test(tc_mul_num, mul_num_2);
   tcase_add_test(tc_mul_num, mul_num_3);
   suite_add_tcase(s, tc_mul_num);
 
-  tc_mul_mat = tcase_create("mult by matrix\n");
+  tc_mul_mat = tcase_create("s21_mul_mtrx\n");
   tcase_add_test(tc_mul_mat, mul_mat_1);
   tcase_add_test(tc_mul_mat, mul_mat_2);
   tcase_add_test(tc_mul_mat, mul_mat_3);
   tcase_add_test(tc_mul_mat, mul_mat_4);
   suite_add_tcase(s, tc_mul_mat);
 
-  tc_transpose = tcase_create("transpose\n");
+  tc_transpose = tcase_create("s21_trans\n");
   tcase_add_test(tc_transpose, transpose_1);
   tcase_add_test(tc_transpose, transpose_2);
   suite_add_tcase(s, tc_transpose);
 
-  tc_complements = tcase_create("complements\n");
+  tc_complements = tcase_create("s21_comp\n");
   tcase_add_test(tc_complements, complements_1);
   tcase_add_test(tc_complements, complements_2);
   tcase_add_test(tc_complements, complements_3);
   tcase_add_test(tc_complements, complements_4);
   suite_add_tcase(s, tc_complements);
 
-  tc_det = tcase_create("determinant\n");
+  tc_det = tcase_create("s21_det\n");
   tcase_add_test(tc_det, det_1);
   tcase_add_test(tc_det, det_2);
   tcase_add_test(tc_det, det_3);
   tcase_add_test(tc_det, det_4);
   suite_add_tcase(s, tc_det);
 
-  tc_inv = tcase_create("inverse matrix\n");
+  tc_inv = tcase_create("s21_inv\n");
   tcase_add_test(tc_inv, inv_1);
   tcase_add_test(tc_inv, inv_2);
   tcase_add_test(tc_inv, inv_3);
@@ -650,16 +573,4 @@ Suite *test_suite(void) {
   suite_add_tcase(s, tc_inv);
 
   return s;
-}
-
-int main() {
-  int success = 0;
-  Suite *s;
-  SRunner *runner;
-  s = test_suite();
-  runner = srunner_create(s);
-  srunner_run_all(runner, CK_NORMAL);
-  success = srunner_ntests_failed(runner);
-  srunner_free(runner);
-  return (success == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

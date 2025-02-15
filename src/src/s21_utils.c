@@ -1,14 +1,5 @@
 #include "../include/s21_utils.h"
-void s21_print_matrix(
-    matrix_t *matrix) {  // вывод никому не нужен – удали в конце
-  for (int i = 0; i < matrix->rows; i++) {
-    for (int j = 0; j < matrix->columns; j++) {
-      printf("[%.9f]", matrix->matrix[i][j]);
-    }
-    printf("\n");
-  }
-  printf("\n");
-}
+
 /**
  * @brief Определяет выделилась память для матрицы
  * @warning Вызывать если уверены в корректности данных
@@ -92,10 +83,7 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
     result->columns = B->columns;
   }
   if (er_code == OK) {
-    // printf("fsdfdsfdsdsfrows = %d cols = %d\n\n\n\n", result->rows,
-    //  result->columns);
     er_code = s21_create_matrix(result->rows, result->columns, result);
-    // printf("er = %d\n\n\n\n", er_code);
   }
   for (int i = 0; i < result->rows && er_code == OK; i++) {
     for (int j = 0; j < result->columns; j++) {
