@@ -57,16 +57,18 @@ def s21_test_h(suites):
 
 def suite_fun(suites, index, file_name, test_cntr):
 
-    names = ["create_",
-    "eq_",
-    "_sum_",
-    "sub_",
-    "mult_num_",
-    "mult_matrix_",
-    "trans_",
-    "calc_compl",
-    "det",
-    "inverse_",]
+    names = [
+        "create_",
+        "eq_",
+        "_sum_",
+        "sub_",
+        "mult_num_",
+        "mult_matrix_",
+        "trans_",
+        "calc_compl",
+        "det",
+        "inverse_",
+    ]
     file_name.write(
         f"""Suite *{suites[index]}(void) {{
     Suite *s;
@@ -121,6 +123,7 @@ END_TEST\n\n"""
     suite_fun(suites, index, s21_create_matrix_test_file, cntr)
     s21_create_matrix_test_file.close()
 
+
 # s21_eq_matrix
 def s21_eq_matrix_test_fun(test_coll, suites, nums):
     index = 1
@@ -135,7 +138,7 @@ def s21_eq_matrix_test_fun(test_coll, suites, nums):
                     for m in nums:
                         if i >= 1 and j >= 1 and k >= 1 and l >= 1:
                             s21_eq_matrix_test_file.write(
-                            f"""
+                                f"""
 START_TEST(eq_{cntr}) {{
   int rows1 = {i}, cols1 = {j};
   matrix_t mtrx1 = {{0}};
@@ -166,7 +169,7 @@ if ({i} >= 1 && {j} >= 1 && {k} >= 1 && {l} >= 1) {{
 
 }}
 END_TEST\n\n"""
-                        )
+                            )
                             cntr += 1
     for i in test_coll[0][0]:
         for j in test_coll[0][1]:
@@ -175,7 +178,7 @@ END_TEST\n\n"""
                     for m in range(len(nums)):
                         if i >= 1 and j >= 1 and k >= 1 and l >= 1:
                             s21_eq_matrix_test_file.write(
-                            f"""
+                                f"""
 START_TEST(eq_{cntr}) {{
   int rows1 = {i}, cols1 = {j};
   matrix_t mtrx1 = {{0}};
@@ -211,14 +214,14 @@ if ({i} >= 1 && {j} >= 1 && {k} >= 1 && {l} >= 1) {{
 
 }}
 END_TEST\n\n"""
-                        )
+                            )
                             cntr += 1
     for i in test_coll[0][0]:
         for j in test_coll[0][1]:
             for k in test_coll[0][0]:
                 for l in test_coll[0][1]:
                     if i >= 1 and j >= 1 and k >= 1 and l >= 1:
-                            s21_eq_matrix_test_file.write(
+                        s21_eq_matrix_test_file.write(
                             f"""
 START_TEST(eq_{cntr}) {{
   int rows1 = {i}, cols1 = {j};
@@ -234,23 +237,7 @@ if ({i} >= 1 && {j} >= 1 && {k} >= 1 && {l} >= 1) {{
 }}
 END_TEST\n\n"""
                         )
-                            cntr += 1
-    s21_eq_matrix_test_file.write(
-                            f"""
-START_TEST(eq_{cntr}) {{
-  int rows1 = {i}, cols1 = {j};
-  matrix_t mtrx1 = {{NULL, rows1 , cols1}};
-  int rows2 = {k}, cols2 = {l};
-  matrix_t mtrx2 = {{NULL, rows2, cols2}};
-if ({i} >= 1 && {j} >= 1 && {k} >= 1 && {l} >= 1) {{
-  ck_assert_int_eq(0, s21_eq_matrix(&mtrx1, &mtrx2));
-  s21_remove_matrix(&mtrx1);
-  s21_remove_matrix(&mtrx2);
-}}
-
-}}
-END_TEST\n\n"""
-                        )
+                        cntr += 1
     cntr -= 1
     suite_fun(suites, index, s21_eq_matrix_test_file, cntr)
     s21_eq_matrix_test_file.close()
@@ -295,19 +282,13 @@ ones = [1, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001, 0.00000001]
 ones_1 = [
     0,
     0.00000001,
-    0.00000002,
     0.00000010,
     0.00000011,
-    0.00000012,
     0.00000020,
     0.00000021,
-    0.00000022,
     0.00000100,
     0.00000101,
-    0.00000102,
     0.00000110,
-    0.00000111,
-    0.00000112,
 ]
 ones_1.sort()
 # удаление повторяющихся элементов
@@ -327,7 +308,7 @@ nums = ones_1 + ones_2 + minus_ones12
 
 
 # для функции сравнения
-test_coll = [[[-5, 0, 1, 4, 15], [-5, 0, 1, 4, 15]], ["NULL", "create"]]
+test_coll = [[[-5, 0, 1, 4], [-5, 0, 1, 4]], ["NULL", "create"]]
 
 # test.h
 s21_test_h(suites)

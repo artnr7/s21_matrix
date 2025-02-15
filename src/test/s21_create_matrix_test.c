@@ -2,7 +2,7 @@
 
 #include "../include/s21_matrix.h"
 #include "../include/s21_utils.h"
-                    
+
 START_TEST(create_1) {
   int rows = -5, cols = -5;
   matrix_t mtrx = {0};
@@ -15,7 +15,7 @@ START_TEST(create_1) {
     ck_assert_int_eq(-5, mtrx.rows);
     ck_assert_int_eq(-5, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -31,7 +31,7 @@ START_TEST(create_2) {
     ck_assert_int_eq(-5, mtrx.rows);
     ck_assert_int_eq(0, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -47,7 +47,7 @@ START_TEST(create_3) {
     ck_assert_int_eq(-5, mtrx.rows);
     ck_assert_int_eq(1, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -63,7 +63,7 @@ START_TEST(create_4) {
     ck_assert_int_eq(-5, mtrx.rows);
     ck_assert_int_eq(4, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -79,7 +79,7 @@ START_TEST(create_5) {
     ck_assert_int_eq(-5, mtrx.rows);
     ck_assert_int_eq(100, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -95,7 +95,7 @@ START_TEST(create_6) {
     ck_assert_int_eq(0, mtrx.rows);
     ck_assert_int_eq(-5, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -111,7 +111,7 @@ START_TEST(create_7) {
     ck_assert_int_eq(0, mtrx.rows);
     ck_assert_int_eq(0, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -127,7 +127,7 @@ START_TEST(create_8) {
     ck_assert_int_eq(0, mtrx.rows);
     ck_assert_int_eq(1, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -143,7 +143,7 @@ START_TEST(create_9) {
     ck_assert_int_eq(0, mtrx.rows);
     ck_assert_int_eq(4, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -159,7 +159,7 @@ START_TEST(create_10) {
     ck_assert_int_eq(0, mtrx.rows);
     ck_assert_int_eq(100, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -175,7 +175,7 @@ START_TEST(create_11) {
     ck_assert_int_eq(1, mtrx.rows);
     ck_assert_int_eq(-5, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -191,7 +191,7 @@ START_TEST(create_12) {
     ck_assert_int_eq(1, mtrx.rows);
     ck_assert_int_eq(0, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -207,7 +207,7 @@ START_TEST(create_13) {
     ck_assert_int_eq(1, mtrx.rows);
     ck_assert_int_eq(1, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -223,7 +223,7 @@ START_TEST(create_14) {
     ck_assert_int_eq(1, mtrx.rows);
     ck_assert_int_eq(4, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -239,7 +239,7 @@ START_TEST(create_15) {
     ck_assert_int_eq(1, mtrx.rows);
     ck_assert_int_eq(100, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -255,7 +255,7 @@ START_TEST(create_16) {
     ck_assert_int_eq(4, mtrx.rows);
     ck_assert_int_eq(-5, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -271,7 +271,7 @@ START_TEST(create_17) {
     ck_assert_int_eq(4, mtrx.rows);
     ck_assert_int_eq(0, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -287,7 +287,7 @@ START_TEST(create_18) {
     ck_assert_int_eq(4, mtrx.rows);
     ck_assert_int_eq(1, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -303,7 +303,7 @@ START_TEST(create_19) {
     ck_assert_int_eq(4, mtrx.rows);
     ck_assert_int_eq(4, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -319,7 +319,7 @@ START_TEST(create_20) {
     ck_assert_int_eq(4, mtrx.rows);
     ck_assert_int_eq(100, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -335,7 +335,7 @@ START_TEST(create_21) {
     ck_assert_int_eq(100, mtrx.rows);
     ck_assert_int_eq(-5, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -351,7 +351,7 @@ START_TEST(create_22) {
     ck_assert_int_eq(100, mtrx.rows);
     ck_assert_int_eq(0, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -367,7 +367,7 @@ START_TEST(create_23) {
     ck_assert_int_eq(100, mtrx.rows);
     ck_assert_int_eq(1, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -383,7 +383,7 @@ START_TEST(create_24) {
     ck_assert_int_eq(100, mtrx.rows);
     ck_assert_int_eq(4, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
@@ -399,16 +399,16 @@ START_TEST(create_25) {
     ck_assert_int_eq(100, mtrx.rows);
     ck_assert_int_eq(100, mtrx.columns);
     s21_remove_matrix(&mtrx);
-    }
+  }
 }
 END_TEST
 
 Suite *s21_create_matrix_test(void) {
-    Suite *s;
-    TCase *tc_create;                
-    s = suite_create("s21_create_matrix_test_suite");
-    tc_create = tcase_create("s21_create_matrix_test_case");
-                        tcase_add_test(tc_create, create_1);
+  Suite *s;
+  TCase *tc_create;
+  s = suite_create("s21_create_matrix_test_suite");
+  tc_create = tcase_create("s21_create_matrix_test_case");
+  tcase_add_test(tc_create, create_1);
   tcase_add_test(tc_create, create_2);
   tcase_add_test(tc_create, create_3);
   tcase_add_test(tc_create, create_4);
@@ -434,5 +434,5 @@ Suite *s21_create_matrix_test(void) {
   tcase_add_test(tc_create, create_24);
   tcase_add_test(tc_create, create_25);
   suite_add_tcase(s, tc_create);
-    return s;
+  return s;
 }
