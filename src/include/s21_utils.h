@@ -26,4 +26,5 @@ void s21_triangulation(matrix_t *A, double *result);
 void s21_col_swap(matrix_t *A, int i, int imac);
 
 void gauss_sub(int i, matrix_t *temp_A, matrix_t A);
+
 #endif

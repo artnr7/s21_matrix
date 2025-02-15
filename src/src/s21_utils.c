@@ -33,12 +33,9 @@ void s21_is_correct_mtrx_size(matrix_t *mtrx, enum error_code *er_code) {
  */
 void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,
                            int mode) {
-  if (mode == 0 && (A->rows != B->rows ||
-                    A->columns != B->columns)) {  // это самый обычный случай
+  if (mode == 0 && (A->rows != B->rows || A->columns != B->columns)) {
     *er_code = ARITH;
-  } else if (mode == 1 &&
-             (A->rows != B->columns ||
-              A->columns != B->rows)) {  // это для умножения матриц
+  } else if (mode == 1 && (A->rows != B->columns || A->columns != B->rows)) {
     *er_code = ARITH;
   }
 }
@@ -77,7 +74,6 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
   if (mode == 0 || mode == 1 || mode == 2) {
     s21_are_eq_mtrx_sizes(A, B, &er_code, 0);
     result->columns = A->columns;
-
   } else if (mode == 3) {
     s21_are_eq_mtrx_sizes(A, B, &er_code, 1);
     result->columns = B->columns;
@@ -87,21 +83,19 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
   }
   for (int i = 0; i < result->rows && er_code == OK; i++) {
     for (int j = 0; j < result->columns; j++) {
-      switch (mode) {
-        case 0:
-          result->matrix[i][j] = A->matrix[i][j] + B->matrix[i][j];
-          break;
-        case 1:
-          result->matrix[i][j] = A->matrix[i][j] - B->matrix[i][j];
-          break;
-        case 2:
-          result->matrix[i][j] = A->matrix[i][j] * number;
-          break;
-        case 3:
-          for (int k = 0; k < A->columns; k++) {
-            result->matrix[i][j] += A->matrix[i][k] * B->matrix[k][j];
-          }
-          break;
+      if (mode == 0) {
+        result->matrix[i][j] = A->matrix[i][j] + B->matrix[i][j];
+      }
+      if (mode == 1) {
+        result->matrix[i][j] = A->matrix[i][j] - B->matrix[i][j];
+      }
+      if (mode == 2) {
+        result->matrix[i][j] = A->matrix[i][j] * number;
+      }
+      if (mode == 3) {
+        for (int k = 0; k < A->columns; k++) {
+          result->matrix[i][j] += A->matrix[i][k] * B->matrix[k][j];
+        }
       }
     }
   }

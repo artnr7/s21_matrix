@@ -7,7 +7,7 @@
  * @brief Создание матрицы
  * @warning Никаких проверок для вызова делать не нужно
  */
-int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сделано
+int s21_create_matrix(int rows, int columns, matrix_t *result) {
   enum error_code er_code = OK;
   s21_is_null_mtrx(result, &er_code);
   if (er_code == OK && (rows < 1 || columns < 1)) {
@@ -27,7 +27,6 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
     double *ptr = (double *)(result->matrix + rows);
     if (ptr == NULL) {
       er_code = INCORRECT;
-      // s21_remove_matrix(result);
     }
     for (int i = 0; i < rows && er_code == OK; i++) {
       result->matrix[i] = ptr + columns * i;
@@ -47,9 +46,7 @@ void s21_remove_matrix(matrix_t *A) {
   s21_is_null_mtrx(A, &er_code);
   s21_is_null_mtrx_ptr(A, &er_code);
   s21_is_correct_mtrx_size(A, &er_code);
-  // printf("er = %d\n", er_code);
   if (er_code == OK) {
-    // printf("er = %d\n", er_code);
     free(A->matrix);
     A->matrix = NULL;
     A->columns = 0;
@@ -61,7 +58,7 @@ void s21_remove_matrix(matrix_t *A) {
  * @brief Функция сравнения матриц по элементам и размерам
  * @warning Никаких проверок для вызова делать не нужно
  */
-int s21_eq_matrix(matrix_t *A, matrix_t *B) {  // сделано
+int s21_eq_matrix(matrix_t *A, matrix_t *B) {
   int eq_code = SUCCESS;
   enum error_code er_code = OK;
   s21_is_null_mtrx(A, &er_code);
@@ -137,7 +134,7 @@ int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
  * @brief Траспонирование матриц
  * @warning Никаких проверок для вызова делать не нужно
  */
-int s21_transpose(matrix_t *A, matrix_t *result) {  // сделано
+int s21_transpose(matrix_t *A, matrix_t *result) {
   enum error_code er_code = OK;
   s21_is_null_mtrx(result, &er_code);
   s21_is_null_mtrx(A, &er_code);
@@ -169,7 +166,7 @@ int s21_transpose(matrix_t *A, matrix_t *result) {  // сделано
  * @brief Матрица алгебраических дополнений
  * @warning Никаких проверок для вызова делать не нужно
  */
-int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
+int s21_calc_complements(matrix_t *A, matrix_t *result) {
   enum error_code er_code = OK;
   s21_is_null_mtrx(result, &er_code);
   s21_is_null_mtrx(A, &er_code);
@@ -179,8 +176,7 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
       s21_is_correct_mtrx_size(A, &er_code);
     }
   }
-  if (er_code == OK &&
-      A->rows != A->columns) {  // проверка на квадратность матрицы
+  if (er_code == OK && A->rows != A->columns) {
     er_code = ARITH;
   }
   if (er_code != OK) {
@@ -225,7 +221,7 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
  * @brief Находит определитель матрицы
  * @warning Никаких проверок для вызова делать не нужно
  */
-int s21_determinant(matrix_t *A, double *result) {  // сделано
+int s21_determinant(matrix_t *A, double *result) {
   enum error_code er_code = OK;
   s21_is_null_mtrx(A, &er_code);
   if (er_code == OK) {
@@ -258,7 +254,7 @@ int s21_determinant(matrix_t *A, double *result) {  // сделано
  * @brief Инвертирует матрицу
  * @warning Никаких проверок для вызова делать не нужно
  */
-int s21_inverse_matrix(matrix_t *A, matrix_t *result) {  // сделано
+int s21_inverse_matrix(matrix_t *A, matrix_t *result) {
   enum error_code er_code = OK;
   s21_is_null_mtrx(result, &er_code);
   s21_is_null_mtrx(A, &er_code);

@@ -11,7 +11,7 @@ LIB_FILE = s21_matrix.a
 TEST_FILES = $(wildcard test/*.c)
 
 FILES_REPORT = *.gcno *.gcda gcov_test coverage.info gcov_test_lcov  report_lcov
-RM_FILES =  test_f s21_create_matrix_test s21_matrix.a $(wildcard src/*.o)
+RM_FILES =  test_f  s21_matrix.a $(wildcard src/*.o)
 RM_MAIN_FILES = s21_matrix
 
 all: $(LIB_FILE)
@@ -22,7 +22,7 @@ test: clean $(LIB_FILE)
 	$(GCC) $(TEST_FILES) -L. $(LIB_FILE) $(CHECK_FLAGS) -o test_f
 	./test_f
 
-test_valgrind: $(LIB_FILE)
+test_valgrind: clean $(LIB_FILE)
 	$(CC) $(FLAGS) $(TEST_FILES) -L. $(LIB_FILE) $(CHECK_FLAGS) -o test_f
 	valgrind --tool=memcheck --leak-check=full ./test_f
 

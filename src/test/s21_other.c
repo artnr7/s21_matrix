@@ -195,7 +195,9 @@ START_TEST(mul_mat_1) {
     for (int j = 0; j < 3; j++) {
       a.matrix[i][j] = 2.13243;
       b.matrix[j][i] = 3.34314;
-      if (j != 2) true_result.matrix[i][j] = 21.3870360906;
+      if (j != 2) {
+        true_result.matrix[i][j] = 21.3870360906;
+      }
     }
   ck_assert_int_eq(0, s21_mult_matrix(&a, &b, &result));
   ck_assert_int_eq(1, s21_eq_matrix(&result, &true_result));
