@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+test_generator.py
+com.sh
+check.py
+s21_main.c
