@@ -1,5 +1,4 @@
 #include "../include/s21_utils.h"
-
 void s21_print_matrix(
     matrix_t *matrix) {  // вывод никому не нужен – удали в конце
   for (int i = 0; i < matrix->rows; i++) {
@@ -10,8 +9,6 @@ void s21_print_matrix(
   }
   printf("\n");
 }
-
-// проверочки мои проверки
 /**
  * @brief Определяет выделилась память для матрицы
  * @warning Вызывать если уверены в корректности данных
@@ -50,7 +47,7 @@ void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,
     *er_code = ARITH;
   } else if (mode == 1 &&
              (A->rows != B->columns ||
-              A->columns != B->columns)) {  // это для умножения матриц
+              A->columns != B->rows)) {  // это для умножения матриц
     *er_code = ARITH;
   }
 }
@@ -70,13 +67,17 @@ void s21_are_eq_mtrx_sizes(matrix_t *A, matrix_t *B, enum error_code *er_code,
 int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
                                double number, int mode) {
   enum error_code er_code = OK;
+
   s21_is_null_mtrx(A, &er_code);
   s21_is_null_mtrx(B, &er_code);
   if (er_code == OK) {
     s21_is_null_mtrx_ptr(A, &er_code);
     s21_is_null_mtrx_ptr(B, &er_code);
+    if (er_code == OK) {
+      s21_is_correct_mtrx_size(A, &er_code);
+      s21_is_correct_mtrx_size(B, &er_code);
+    }
   }
-  // printf("er = %d\n", er_code);
   if (er_code != OK) {
     return er_code;
   }
@@ -85,12 +86,16 @@ int s21_sum_sub_mulnum_mulmtrx(matrix_t *A, matrix_t *B, matrix_t *result,
   if (mode == 0 || mode == 1 || mode == 2) {
     s21_are_eq_mtrx_sizes(A, B, &er_code, 0);
     result->columns = A->columns;
+
   } else if (mode == 3) {
     s21_are_eq_mtrx_sizes(A, B, &er_code, 1);
     result->columns = B->columns;
   }
   if (er_code == OK) {
+    // printf("fsdfdsfdsdsfrows = %d cols = %d\n\n\n\n", result->rows,
+    //  result->columns);
     er_code = s21_create_matrix(result->rows, result->columns, result);
+    // printf("er = %d\n\n\n\n", er_code);
   }
   for (int i = 0; i < result->rows && er_code == OK; i++) {
     for (int j = 0; j < result->columns; j++) {

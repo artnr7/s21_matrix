@@ -9,7 +9,8 @@
  */
 int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сделано
   enum error_code er_code = OK;
-  if (rows < 1 || columns < 1) {
+  s21_is_null_mtrx(result, &er_code);
+  if (er_code == OK && (rows < 1 || columns < 1)) {
     er_code = INCORRECT;
     return er_code;
   }
@@ -26,7 +27,7 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
     double *ptr = (double *)(result->matrix + rows);
     if (ptr == NULL) {
       er_code = INCORRECT;
-      s21_remove_matrix(result);
+      // s21_remove_matrix(result);
     }
     for (int i = 0; i < rows && er_code == OK; i++) {
       result->matrix[i] = ptr + columns * i;
@@ -42,10 +43,19 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {  // сдела�
  * @warning Вызывать если память была выделена
  */
 void s21_remove_matrix(matrix_t *A) {
-  if (A->matrix != NULL) {
+  enum error_code er_code = OK;
+  s21_is_null_mtrx(A, &er_code);
+  s21_is_null_mtrx_ptr(A, &er_code);
+  s21_is_correct_mtrx_size(A, &er_code);
+  // printf("er = %d\n", er_code);
+  if (er_code == OK) {
+    // printf("er = %d\n", er_code);
     free(A->matrix);
+    A->matrix = NULL;
+    A->columns = 0;
+    A->rows = 0;
   }
-}  // сделано
+}
 
 /**
  * @brief Функция сравнения матриц по элементам и размерам
@@ -54,12 +64,15 @@ void s21_remove_matrix(matrix_t *A) {
 int s21_eq_matrix(matrix_t *A, matrix_t *B) {  // сделано
   int eq_code = SUCCESS;
   enum error_code er_code = OK;
-
   s21_is_null_mtrx(A, &er_code);
   s21_is_null_mtrx(B, &er_code);
   if (er_code == OK) {
     s21_is_null_mtrx_ptr(A, &er_code);
     s21_is_null_mtrx_ptr(B, &er_code);
+    if (er_code == OK) {
+      s21_is_correct_mtrx_size(A, &er_code);
+      s21_is_correct_mtrx_size(B, &er_code);
+    }
   }
 
   if (er_code == OK) {
@@ -69,11 +82,9 @@ int s21_eq_matrix(matrix_t *A, matrix_t *B) {  // сделано
   if (er_code != OK) {
     eq_code = FAILURE;
   }
-  // printf("eq = %d\ner = %d\n", eq_code, er_code);
   for (int i = 0; i < A->rows && eq_code == SUCCESS; i++) {
     for (int j = 0; j < A->columns && eq_code == SUCCESS; j++) {
       if (fabs(A->matrix[i][j] - B->matrix[i][j]) > S21_EPS) {
-        // printf("i = %d, j = %d", i, j);
         eq_code = FAILURE;
       }
     }
@@ -108,7 +119,8 @@ int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
     er_code = s21_create_matrix(B.rows, B.columns, &B);
 
     if (er_code == OK) {
-      s21_sum_sub_mulnum_mulmtrx(A, &B, result, number, 2);
+      er_code = s21_sum_sub_mulnum_mulmtrx(A, &B, result, number, 2);
+      s21_remove_matrix(&B);
     }
   }
 
@@ -127,10 +139,13 @@ int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
  */
 int s21_transpose(matrix_t *A, matrix_t *result) {  // сделано
   enum error_code er_code = OK;
-
-  s21_is_null_mtrx_ptr(A, &er_code);
+  s21_is_null_mtrx(result, &er_code);
+  s21_is_null_mtrx(A, &er_code);
   if (er_code == OK) {
-    s21_is_correct_mtrx_size(A, &er_code);
+    s21_is_null_mtrx_ptr(A, &er_code);
+    if (er_code == OK) {
+      s21_is_correct_mtrx_size(A, &er_code);
+    }
   }
   if (er_code != OK) {
     return er_code;
@@ -156,9 +171,13 @@ int s21_transpose(matrix_t *A, matrix_t *result) {  // сделано
  */
 int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
   enum error_code er_code = OK;
-  s21_is_null_mtrx_ptr(A, &er_code);
+  s21_is_null_mtrx(result, &er_code);
+  s21_is_null_mtrx(A, &er_code);
   if (er_code == OK) {
-    s21_is_correct_mtrx_size(A, &er_code);
+    s21_is_null_mtrx_ptr(A, &er_code);
+    if (er_code == OK) {
+      s21_is_correct_mtrx_size(A, &er_code);
+    }
   }
   if (er_code == OK &&
       A->rows != A->columns) {  // проверка на квадратность матрицы
@@ -168,33 +187,35 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
     return er_code;
   }
 
-  matrix_t minor;
-  minor.rows = A->rows - 1;
-  minor.columns = A->columns - 1;
-  minor.matrix = NULL;
-  if (A->rows == 1 && A->columns == 1) {
-    minor.rows = A->rows;
-    minor.columns = A->columns;
-  }
-
-  // надо сделать случай когда матрица 1 на 1
-  er_code = s21_create_matrix(minor.rows, minor.columns, &minor);
-
   result->rows = A->rows;
   result->columns = A->columns;
   result->matrix = NULL;
 
-  er_code = s21_create_matrix(result->rows, result->columns, result);
-
   if (er_code == OK) {
+    er_code = s21_create_matrix(result->rows, result->columns, result);
+  }
+
+  matrix_t minor;
+  int brake = 0;
+  if (er_code == OK && A->rows == 1 && A->columns == 1) {
+    result->matrix[0][0] = A->matrix[0][0];
+    brake = 1;
+  } else if (er_code == OK) {
+    minor.rows = A->rows - 1;
+    minor.columns = A->columns - 1;
+    minor.matrix = NULL;
+    er_code = s21_create_matrix(minor.rows, minor.columns, &minor);
+  }
+
+  if (er_code == OK && brake == 0) {
     s21_set_matrix(result, 1);
   }
-  for (int i = 0; i < result->rows && er_code == OK; i++) {
+  for (int i = 0; i < result->rows && er_code == OK && brake == 0; i++) {
     for (int j = 0; j < result->columns; j++) {
       s21_minor(&minor, *A, &(result->matrix[i][j]), i, j);
     }
   }
-  if (er_code == OK) {
+  if (er_code == OK && brake == 0) {
     s21_remove_matrix(&minor);
   }
   return er_code;
@@ -206,9 +227,12 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {  // сделано
  */
 int s21_determinant(matrix_t *A, double *result) {  // сделано
   enum error_code er_code = OK;
-  s21_is_null_mtrx_ptr(A, &er_code);
+  s21_is_null_mtrx(A, &er_code);
   if (er_code == OK) {
-    s21_is_correct_mtrx_size(A, &er_code);
+    s21_is_null_mtrx_ptr(A, &er_code);
+    if (er_code == OK) {
+      s21_is_correct_mtrx_size(A, &er_code);
+    }
   }
   if (er_code == OK && A->rows != A->columns) {
     er_code = ARITH;
@@ -216,8 +240,12 @@ int s21_determinant(matrix_t *A, double *result) {  // сделано
   if (er_code != OK) {
     return er_code;
   }
+  if (*result == 0 || *result == 1) {
+    *result = 1;
+  } else if (*result == -1) {
+    *result = -1;
+  }
 
-  *result = 1;
   s21_triangulation(A, result);
   for (int i = 0; i < A->rows; i++) {
     *result *= A->matrix[i][i];
@@ -232,42 +260,48 @@ int s21_determinant(matrix_t *A, double *result) {  // сделано
  */
 int s21_inverse_matrix(matrix_t *A, matrix_t *result) {  // сделано
   enum error_code er_code = OK;
-  s21_is_null_mtrx_ptr(A, &er_code);
+  s21_is_null_mtrx(result, &er_code);
+  s21_is_null_mtrx(A, &er_code);
   if (er_code == OK) {
-    s21_is_correct_mtrx_size(A, &er_code);
+    s21_is_null_mtrx_ptr(A, &er_code);
+    if (er_code == OK) {
+      s21_is_correct_mtrx_size(A, &er_code);
+    }
   }
 
-  matrix_t tmp_mtrx = {NULL, A->rows, A->columns};
-  er_code = s21_create_matrix(tmp_mtrx.rows, tmp_mtrx.columns, &tmp_mtrx);
   if (er_code != OK) {
     return er_code;
   }
-
+  matrix_t tmp_mtrx = {NULL, A->rows, A->columns};
+  er_code = s21_create_matrix(tmp_mtrx.rows, tmp_mtrx.columns, &tmp_mtrx);
   /*
    создание и удаление матрицы tmp_mtrx, так как матрица в ходе нахождения
    определителя меняется, нам приходится заводить временную чтобы основная не
    поменялась
   */
-
   double det = 1;
+
   s21_copy_matrix(&tmp_mtrx, *A);
   s21_determinant(&tmp_mtrx, &det);
-  if (det == 0.0) {
+  if (fabs(det - 0.0) < S21_EPS) {
     er_code = ARITH;
   }
-
+  s21_remove_matrix(&tmp_mtrx);
   if (er_code == OK) {
     er_code = s21_calc_complements(A, &tmp_mtrx);
     if (er_code == OK) {
       er_code = s21_transpose(&tmp_mtrx, result);
-      s21_remove_matrix(&tmp_mtrx);
     }
     double inv_det = 1 / det;
+    if (result->rows == 1 && result->columns == 1) {
+      result->matrix[0][0] = 1;
+    }
     for (int i = 0; i < result->rows && er_code == OK; i++) {
       for (int j = 0; j < result->columns; j++) {
         result->matrix[i][j] *= inv_det;
       }
     }
   }
+  s21_remove_matrix(&tmp_mtrx);
   return er_code;
 }

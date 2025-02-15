@@ -72,7 +72,6 @@ START_TEST(sum_1) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 3, &true_result);
   for (int i = 0; i < 2; i++)
@@ -96,7 +95,6 @@ START_TEST(sum_2) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   ck_assert_int_eq(2, s21_sum_matrix(&a, &b, &result));
   s21_remove_matrix(&a);
   s21_remove_matrix(&b);
@@ -110,7 +108,6 @@ START_TEST(sum_3) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 3, &true_result);
   for (int i = 0; i < 2; i++)
@@ -142,7 +139,6 @@ START_TEST(sub_1) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 3, &true_result);
   for (int i = 0; i < 2; i++)
@@ -166,7 +162,6 @@ START_TEST(sub_2) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   ck_assert_int_eq(2, s21_sub_matrix(&a, &b, &result));
   s21_remove_matrix(&a);
   s21_remove_matrix(&b);
@@ -180,7 +175,6 @@ START_TEST(sub_3) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 3, &true_result);
   for (int i = 0; i < 2; i++)
@@ -200,7 +194,6 @@ END_TEST
 
 START_TEST(sub_4) {
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   ck_assert_int_eq(1, s21_sub_matrix(NULL, NULL, &result));
   s21_remove_matrix(&result);
 }
@@ -210,7 +203,6 @@ START_TEST(mul_num_1) {
   matrix_t a = {0};
   s21_create_matrix(2, 3, &a);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 3, &true_result);
   for (int i = 0; i < 2; i++)
@@ -230,7 +222,6 @@ START_TEST(mul_num_2) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   ck_assert_int_eq(1, s21_mult_number(NULL, 2342, &result));
   s21_remove_matrix(&b);
   s21_remove_matrix(&result);
@@ -241,7 +232,6 @@ START_TEST(mul_num_3) {
   matrix_t a = {0};
   s21_create_matrix(9, 7, &a);
   matrix_t result = {0};
-  s21_create_matrix(9, 7, &result);
   matrix_t true_result = {0};
   s21_create_matrix(9, 7, &true_result);
   for (int i = 0; i < 2; i++)
@@ -263,7 +253,6 @@ START_TEST(mul_mat_1) {
   matrix_t b = {0};
   s21_create_matrix(3, 2, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 2, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 2, &true_result);
   for (int i = 0; i < 2; i++)
@@ -287,7 +276,6 @@ START_TEST(mul_mat_2) {
   matrix_t b = {0};
   s21_create_matrix(2, 3, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   ck_assert_int_eq(2, s21_mult_matrix(&a, &b, &result));
   s21_remove_matrix(&a);
   s21_remove_matrix(&b);
@@ -301,7 +289,6 @@ START_TEST(mul_mat_3) {
   matrix_t b = {0};
   s21_create_matrix(3, 2, &b);
   matrix_t result = {0};
-  s21_create_matrix(2, 2, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 2, &true_result);
   for (int i = 0; i < 2; i++)
@@ -324,7 +311,6 @@ END_TEST
 
 START_TEST(mul_mat_4) {
   matrix_t result = {0};
-  s21_create_matrix(2, 3, &result);
   ck_assert_int_eq(1, s21_mult_matrix(NULL, NULL, &result));
   s21_remove_matrix(&result);
 }
@@ -334,7 +320,6 @@ START_TEST(transpose_1) {
   matrix_t a = {0};
   s21_create_matrix(2, 3, &a);
   matrix_t result = {0};
-  s21_create_matrix(3, 2, &result);
   matrix_t true_result = {0};
   s21_create_matrix(3, 2, &true_result);
   for (int i = 0; i < 2; i++)
@@ -352,7 +337,6 @@ END_TEST
 
 START_TEST(transpose_2) {
   matrix_t result = {0};
-  s21_create_matrix(3, 2, &result);
   ck_assert_int_eq(1, s21_transpose(NULL, &result));
   s21_remove_matrix(&result);
 }
@@ -362,7 +346,6 @@ START_TEST(complements_1) {
   matrix_t a = {0};
   s21_create_matrix(3, 3, &a);
   matrix_t result = {0};
-  s21_create_matrix(3, 3, &result);
   matrix_t true_result = {0};
   s21_create_matrix(3, 3, &true_result);
   a.matrix[0][0] = 1;
@@ -395,7 +378,6 @@ START_TEST(complements_2) {
   matrix_t a = {0};
   s21_create_matrix(1, 1, &a);
   matrix_t result = {0};
-  s21_create_matrix(1, 1, &result);
   matrix_t true_result = {0};
   s21_create_matrix(1, 1, &true_result);
   a.matrix[0][0] = 0.5;
@@ -410,7 +392,6 @@ END_TEST
 
 START_TEST(complements_3) {
   matrix_t result = {0};
-  s21_create_matrix(1, 1, &result);
   ck_assert_int_eq(1, s21_calc_complements(NULL, &result));
   s21_remove_matrix(&result);
 }
@@ -420,7 +401,6 @@ START_TEST(complements_4) {
   matrix_t a = {0};
   s21_create_matrix(3, 1, &a);
   matrix_t result = {0};
-  s21_create_matrix(3, 1, &result);
   ck_assert_int_eq(2, s21_calc_complements(&a, &result));
   s21_remove_matrix(&a);
   s21_remove_matrix(&result);
@@ -497,7 +477,6 @@ START_TEST(inv_1) {
   matrix_t a = {0};
   s21_create_matrix(2, 3, &a);
   matrix_t result = {0};
-  s21_create_matrix(3, 2, &result);
   ck_assert_int_eq(2, s21_inverse_matrix(&a, &result));
   s21_remove_matrix(&a);
   s21_remove_matrix(&result);
@@ -508,7 +487,6 @@ START_TEST(inv_2) {
   matrix_t a = {0};
   s21_create_matrix(3, 3, &a);
   matrix_t result = {0};
-  s21_create_matrix(3, 3, &result);
   int c = 1;
   for (int i = 0; i < 3; i++)
     for (int j = 0; j < 3; j++) {
@@ -524,7 +502,6 @@ START_TEST(inv_3) {
   matrix_t a = {0};
   s21_create_matrix(2, 2, &a);
   matrix_t result = {0};
-  s21_create_matrix(2, 2, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 2, &true_result);
   int c = 1;
@@ -548,7 +525,6 @@ START_TEST(inv_4) {
   matrix_t a = {0};
   s21_create_matrix(2, 2, &a);
   matrix_t result = {0};
-  s21_create_matrix(2, 2, &result);
   matrix_t true_result = {0};
   s21_create_matrix(2, 2, &true_result);
   int c = 2;
@@ -572,7 +548,6 @@ START_TEST(inv_5) {
   matrix_t a = {0};
   s21_create_matrix(1, 1, &a);
   matrix_t result = {0};
-  s21_create_matrix(1, 1, &result);
   matrix_t true_result = {0};
   s21_create_matrix(1, 1, &true_result);
   a.matrix[0][0] = 0.5;
@@ -587,7 +562,6 @@ END_TEST
 
 START_TEST(inv_6) {
   matrix_t result = {0};
-  s21_create_matrix(1, 1, &result);
   ck_assert_int_eq(1, s21_inverse_matrix(NULL, &result));
   s21_remove_matrix(&result);
 }

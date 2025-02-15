@@ -30,6 +30,11 @@ test: clean $(LIB_FILE)
 	$(GCC) $(TEST_FILES) -L. $(LIB_FILE) $(CHECK_FLAGS) -o test_f
 	./test_f
 
+test_valgrind: $(LIB_FILE)
+	$(CC) $(FLAGS) $(TESTS_FILE) -L. $(LIB_FILE) $(CHECK_FLAGS) -o test_f
+	valgrind --tool=memcheck --leak-check=full ./test_f
+
+
 
 $(LIB_FILE): $(OBJS)
 	ar rcs $@ $^
@@ -45,13 +50,13 @@ clang:
 	clang-format -i $(CFILES)
 
 gcov_report:
-	$(GCC) $(TEST_FILE) $(CFILES) $(CHECK_FLAGS) $(GCOV_FLAGS) -o gcov_test
+	$(GCC) $(TESTS_FILE) $(CFILES) $(CHECK_FLAGS) $(GCOV_FLAGS) -o gcov_test
 	./gcov_test
 	mkdir -p report_gcov
 	gcovr --html-details -o ./report_gcov/report.html
 
 gcov_report_lcov:
-	$(GCC) $(TEST_FILE) $(CFILES) $(CHECK_FLAGS) $(GCOV_FLAGS) -o gcov_test_lcov
+	$(GCC) $(TESTS_FILE) $(CFILES) $(CHECK_FLAGS) $(GCOV_FLAGS) -o gcov_test_lcov
 	./gcov_test_lcov
 	lcov --capture --directory . --output-file coverage.info --rc branch_coverage=1
 	genhtml --branch-coverage coverage.info --output-directory report_lcov
