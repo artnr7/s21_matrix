@@ -173,11 +173,11 @@ void s21_triangulation(matrix_t *A, double *result) {
       }
     }
     if (imac != old_imac) {
-      *result *= -1;
+      *result *= -1.0;
     }
     s21_col_swap(A, i, imac);
     if (A->matrix[i][i] == 0.0) {
-      *result = 0;
+      *result = 0.0;
       brake = 1;
     }
 

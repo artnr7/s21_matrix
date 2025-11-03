@@ -236,16 +236,19 @@ int s21_determinant(matrix_t *A, double *result) {
   if (er_code != OK) {
     return er_code;
   }
-  if (*result == 0 || *result == 1) {
-    *result = 1;
-  } else if (*result == -1) {
-    *result = -1;
+
+  double det = 1.0;
+
+  if (*result == -1) {
+    det = -1.0;
   }
 
-  s21_triangulation(A, result);
+  s21_triangulation(A, &det);
   for (int i = 0; i < A->rows; i++) {
-    *result *= A->matrix[i][i];
+    det *= A->matrix[i][i];
   }
+
+  *result = det;
 
   return er_code;
 }

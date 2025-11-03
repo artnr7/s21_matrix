@@ -380,7 +380,7 @@ END_TEST
 START_TEST(det_3) {
   matrix_t a = {0};
   s21_create_matrix(7, 7, &a);
-  double result = 0.0;
+  double result;
   int c = 1;
   for (int i = 0; i < 7; i++) {
     for (int j = 0; j < 7; j++) {
